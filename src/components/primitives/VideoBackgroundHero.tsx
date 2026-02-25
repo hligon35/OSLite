@@ -14,7 +14,7 @@ export function VideoBackgroundHero({
   return (
     <section className="relative h-[100dvh] w-full overflow-hidden">
       <video
-        className="absolute inset-0 h-full w-full object-cover -z-10"
+        className="absolute inset-0 h-full w-full object-cover object-center -z-10"
         src={videoSrc}
         autoPlay
         loop
