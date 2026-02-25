@@ -13,10 +13,7 @@ export default function ContactPage() {
             <div className="text-sm uppercase tracking-[0.2em] text-white/60">Direct</div>
             <div className="mt-2 space-y-1">
               <div>
-                <span className="text-white/60">Email:</span> hello@offseason.studio
-              </div>
-              <div>
-                <span className="text-white/60">Location:</span> Los Angeles / Remote
+                <span className="text-white/60">Email:</span> info@off-season.io
               </div>
             </div>
           </div>

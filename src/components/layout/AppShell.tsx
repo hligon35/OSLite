@@ -1,12 +1,16 @@
 'use client';
 
 import { useCallback, useEffect, useState } from 'react';
+import { usePathname } from 'next/navigation';
 import { Header } from '@/components/layout/Header';
 import { Footer } from '@/components/layout/Footer';
 import { FullScreenMenuOverlay } from '@/components/nav/FullScreenMenuOverlay';
+import { FixedVideoBackground } from '@/components/primitives/FixedVideoBackground';
 
 export function AppShell({ children }: { children: React.ReactNode }) {
   const [menuOpen, setMenuOpen] = useState(false);
+  const pathname = usePathname();
+  const showGlobalBackgroundVideo = pathname !== '/';
 
   const closeMenu = useCallback(() => setMenuOpen(false), []);
   const toggleMenu = useCallback(() => setMenuOpen((v) => !v), []);
@@ -28,12 +32,60 @@ export function AppShell({ children }: { children: React.ReactNode }) {
   }, [menuOpen]);
 
   return (
-    <div className="min-h-dvh bg-black text-white">
+    <div className="min-h-dvh bg-black text-white flex flex-col relative">
+      {showGlobalBackgroundVideo ? (
+        <FixedVideoBackground src="/offseason_(2025)_-_official_trailer.mp4" />
+      ) : null}
       <Header menuOpen={menuOpen} onToggleMenu={toggleMenu} />
       <FullScreenMenuOverlay open={menuOpen} onClose={closeMenu} />
 
-      <main className="animate-fade-in">{children}</main>
-      <Footer />
+      <main className="animate-fade-in flex-1 relative z-10">{children}</main>
+
+      <section className="relative z-10 border-t border-white/10 bg-black">
+        <div className="mx-auto max-w-6xl px-4 py-10 md:px-6">
+          <div className="flex flex-col gap-6 md:flex-row md:items-center md:justify-between">
+            <div className="max-w-xl">
+              <div className="text-xs uppercase tracking-[0.2em] text-white/60">
+                Subscribe
+              </div>
+              <div className="mt-2 text-2xl font-semibold tracking-tight md:text-3xl">
+                Newsletter
+              </div>
+              <div className="mt-2 text-sm text-white/70">
+                Get updates on new releases, screenings, and news.
+              </div>
+            </div>
+
+            <form
+              className="flex w-full max-w-md flex-col gap-3 sm:flex-row sm:items-center"
+              onSubmit={(e) => e.preventDefault()}
+            >
+              <label htmlFor="newsletter-email" className="sr-only">
+                Email
+              </label>
+              <input
+                id="newsletter-email"
+                type="email"
+                inputMode="email"
+                autoComplete="email"
+                placeholder="Email address"
+                required
+                className="w-full rounded-full border border-white/15 bg-black px-4 py-3 text-sm text-white placeholder:text-white/40 outline-none focus:border-white/30"
+              />
+              <button
+                type="submit"
+                className="inline-flex shrink-0 items-center justify-center rounded-full border border-white/15 bg-transparent px-5 py-3 text-sm font-semibold uppercase tracking-[0.2em] text-white/85 transition hover:border-white/30 hover:text-white"
+              >
+                Subscribe
+              </button>
+            </form>
+          </div>
+        </div>
+      </section>
+
+      <div className="relative z-10">
+        <Footer />
+      </div>
     </div>
   );
 }
