@@ -9,6 +9,11 @@ import { FixedVideoBackground } from '@/components/primitives/FixedVideoBackgrou
 
 export function AppShell({ children }: { children: React.ReactNode }) {
   const [menuOpen, setMenuOpen] = useState(false);
+  const [newsletterEmail, setNewsletterEmail] = useState('');
+  const [newsletterStatus, setNewsletterStatus] = useState<
+    'idle' | 'sending' | 'success' | 'error'
+  >('idle');
+  const [newsletterToast, setNewsletterToast] = useState<string | null>(null);
   const pathname = usePathname();
   const showGlobalBackgroundVideo = pathname !== '/';
 
@@ -30,6 +35,35 @@ export function AppShell({ children }: { children: React.ReactNode }) {
       document.documentElement.style.overflow = '';
     };
   }, [menuOpen]);
+
+  async function onNewsletterSubmit(e: React.FormEvent) {
+    e.preventDefault();
+    const email = newsletterEmail.trim();
+    if (!email) return;
+
+    setNewsletterStatus('sending');
+    setNewsletterToast(null);
+
+    try {
+      const res = await fetch('/api/forms/newsletter', {
+        method: 'POST',
+        headers: { 'Content-Type': 'application/json' },
+        body: JSON.stringify({ email })
+      });
+
+      const json = (await res.json()) as { ok?: boolean; error?: string };
+      if (!res.ok || !json.ok) {
+        throw new Error(json.error || 'Failed to subscribe');
+      }
+
+      setNewsletterEmail('');
+      setNewsletterStatus('success');
+      setNewsletterToast('Subscribed');
+    } catch {
+      setNewsletterStatus('error');
+      setNewsletterToast('Error');
+    }
+  }
 
   return (
     <div className="min-h-dvh bg-black text-white flex flex-col relative">
@@ -58,7 +92,7 @@ export function AppShell({ children }: { children: React.ReactNode }) {
 
             <form
               className="flex w-full max-w-md flex-col gap-3 sm:flex-row sm:items-center"
-              onSubmit={(e) => e.preventDefault()}
+              onSubmit={onNewsletterSubmit}
             >
               <label htmlFor="newsletter-email" className="sr-only">
                 Email
@@ -70,14 +104,33 @@ export function AppShell({ children }: { children: React.ReactNode }) {
                 autoComplete="email"
                 placeholder="Email address"
                 required
+                value={newsletterEmail}
+                onChange={(e) => setNewsletterEmail(e.target.value)}
                 className="w-full rounded-full border border-white/15 bg-black px-4 py-3 text-sm text-white placeholder:text-white/40 outline-none focus:border-white/30"
               />
-              <button
-                type="submit"
-                className="inline-flex shrink-0 items-center justify-center rounded-full border border-white/15 bg-transparent px-5 py-3 text-sm font-semibold uppercase tracking-[0.2em] text-white/85 transition hover:border-white/30 hover:text-white"
-              >
-                Subscribe
-              </button>
+              <div className="flex items-center gap-3">
+                <button
+                  type="submit"
+                  disabled={newsletterStatus === 'sending'}
+                  className={
+                    'inline-flex shrink-0 items-center justify-center rounded-full border px-5 py-3 text-sm font-semibold uppercase tracking-[0.2em] transition ' +
+                    (newsletterStatus === 'sending'
+                      ? 'border-white/10 text-white/40 cursor-not-allowed'
+                      : 'border-white/15 bg-transparent text-white/85 hover:border-white/30 hover:text-white')
+                  }
+                >
+                  {newsletterStatus === 'sending' ? 'Sending…' : 'Subscribe'}
+                </button>
+                {newsletterToast ? (
+                  <span
+                    className="text-xs uppercase tracking-[0.2em] text-white/70"
+                    role="status"
+                    aria-live="polite"
+                  >
+                    {newsletterToast}
+                  </span>
+                ) : null}
+              </div>
             </form>
           </div>
         </div>

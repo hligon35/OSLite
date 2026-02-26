@@ -5,13 +5,14 @@ import Image from 'next/image';
 export default function ProjectsPage() {
   return (
     <Section contained={false}>
-      <div className="mx-auto w-full max-w-4xl md:w-1/2">
-        <SectionTitle className="mb-4 md:mb-6">Projects</SectionTitle>
-
-        <div className="mb-12 animate-fade-up">
+      <div className="mx-auto w-full max-w-4xl">
+        <div className="animate-fade-up w-full md:w-1/2 md:mx-auto text-left md:-ml-[50px]">
+          <SectionTitle className="mb-1 md:mb-2">Projects</SectionTitle>
           <div className="text-xs uppercase tracking-[0.2em] text-white/60">Season One</div>
+        </div>
 
-          <div className="mt-2 relative w-full">
+        <div className="mt-3 mb-12 animate-fade-up w-full md:w-1/2 md:mx-auto">
+          <div className="relative w-full">
             <Image
               src="/offPromo.jpg"
               alt="Off Season promo"
@@ -63,7 +64,7 @@ function PlatformLink({
       href={href}
       target="_blank"
       rel="noopener noreferrer"
-      className="inline-flex items-center gap-3 border border-white/15 bg-transparent px-4 py-3 text-sm uppercase tracking-[0.2em] text-white/85 transition hover:border-white/30 hover:text-white"
+      className="inline-flex items-center gap-3 border border-white/15 bg-black/20 backdrop-blur-sm px-4 py-3 text-sm uppercase tracking-[0.2em] text-white/85 transition hover:border-white/30 hover:text-white"
       aria-label={`Watch now on ${platform}`}
     >
       <span className={`relative ${iconClassName ?? 'h-8 w-10'}`}>
