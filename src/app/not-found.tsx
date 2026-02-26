@@ -1,6 +1,15 @@
 import Link from 'next/link';
+import type { Metadata } from 'next';
 import { Section } from '@/components/primitives/Section';
 import { SectionTitle } from '@/components/primitives/SectionTitle';
+import { buildPageMetadata } from '@/lib/seo';
+
+export const metadata: Metadata = buildPageMetadata({
+  title: 'Not Found',
+  description: 'The requested page could not be found.',
+  pathname: '/404',
+  keywords: ['OffSeason 404', 'page not found']
+});
 
 export default function NotFound() {
   return (

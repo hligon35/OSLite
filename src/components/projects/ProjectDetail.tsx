@@ -11,6 +11,7 @@ export function ProjectDetail({ project }: { project: Project }) {
             alt={project.title}
             fill
             priority
+            sizes="(max-width: 768px) 100vw, 1024px"
             className="object-cover"
           />
         </div>
@@ -41,7 +42,13 @@ export function ProjectDetail({ project }: { project: Project }) {
                 <div key={`${m.url}-${idx}`} className="border border-white/10 bg-black/30">
                   {m.type === 'image' ? (
                     <div className="relative aspect-[16/9] w-full">
-                      <Image src={m.url} alt={m.caption ?? ''} fill className="object-cover" />
+                      <Image
+                        src={m.url}
+                        alt={m.caption ?? `${project.title} media`}
+                        fill
+                        sizes="(max-width: 768px) 100vw, 768px"
+                        className="object-cover"
+                      />
                     </div>
                   ) : (
                     <video

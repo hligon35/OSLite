@@ -1,6 +1,21 @@
 import { Section } from '@/components/primitives/Section';
 import { SectionTitle } from '@/components/primitives/SectionTitle';
 import Image from 'next/image';
+import type { Metadata } from 'next';
+import { buildPageMetadata } from '@/lib/seo';
+
+export const metadata: Metadata = buildPageMetadata({
+  title: 'Projects',
+  description:
+    'Explore OffSeason projects — premium films, series, and brand work with a cinematic focus on athletes and culture.',
+  pathname: '/projects',
+  keywords: [
+    'OffSeason projects',
+    'sports film projects',
+    'athlete documentary projects',
+    'brand spots'
+  ]
+});
 
 export default function ProjectsPage() {
   return (

@@ -31,6 +31,7 @@ export function FullScreenMenuOverlay({
       className="fixed inset-0 z-[60] animate-menu-in"
       role="dialog"
       aria-modal="true"
+      aria-label="Site menu"
       onClick={onClose}
       style={{
         backgroundImage: `url(/rubberLogo.png)`,

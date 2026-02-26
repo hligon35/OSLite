@@ -70,10 +70,24 @@ export function AppShell({ children }: { children: React.ReactNode }) {
       {showGlobalBackgroundVideo ? (
         <FixedVideoBackground src="/offseason_(2025)_-_official_trailer.mp4" />
       ) : null}
+
+      <a
+        href="#main-content"
+        className="sr-only focus:not-sr-only focus:absolute focus:left-4 focus:top-4 focus:z-[70] border border-white/30 bg-black px-4 py-2 text-xs uppercase tracking-[0.2em] text-white"
+      >
+        Skip to content
+      </a>
+
       <Header menuOpen={menuOpen} onToggleMenu={toggleMenu} />
       <FullScreenMenuOverlay open={menuOpen} onClose={closeMenu} />
 
-      <main className="animate-fade-in flex-1 relative z-10">{children}</main>
+      <main
+        id="main-content"
+        role="main"
+        className="animate-fade-in flex-1 relative z-10"
+      >
+        {children}
+      </main>
 
       <section className="relative z-10 border-t border-white/10 bg-black">
         <div className="mx-auto max-w-6xl px-4 py-10 md:px-6">

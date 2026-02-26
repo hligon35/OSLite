@@ -1,5 +1,20 @@
 import { Section } from '@/components/primitives/Section';
 import { SectionTitle } from '@/components/primitives/SectionTitle';
+import type { Metadata } from 'next';
+import { buildPageMetadata } from '@/lib/seo';
+
+export const metadata: Metadata = buildPageMetadata({
+  title: 'About',
+  description:
+    'Learn about OffSeason — a premium athlete-led media brand documenting training, recovery, and the work between seasons.',
+  pathname: '/about',
+  keywords: [
+    'about OffSeason',
+    'athlete-led media',
+    'sports documentary',
+    'training and recovery storytelling'
+  ]
+});
 
 export default function AboutPage() {
   return (

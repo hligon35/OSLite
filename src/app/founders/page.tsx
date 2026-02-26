@@ -3,6 +3,16 @@ import { SectionTitle } from '@/components/primitives/SectionTitle';
 import { TeamGrid } from '@/components/team/TeamGrid';
 import { founders } from '@/data/founders';
 import Image from 'next/image';
+import type { Metadata } from 'next';
+import { buildPageMetadata } from '@/lib/seo';
+
+export const metadata: Metadata = buildPageMetadata({
+  title: 'Founders',
+  description:
+    'Meet the founders behind OffSeason — a premium athlete-led media studio focused on cinematic storytelling and craft.',
+  pathname: '/founders',
+  keywords: ['OffSeason founders', 'sports media studio', 'creative director', 'producer']
+});
 
 export default function FoundersPage() {
   return (

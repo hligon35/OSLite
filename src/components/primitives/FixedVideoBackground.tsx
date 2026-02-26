@@ -1,6 +1,6 @@
 export function FixedVideoBackground({ src }: { src: string }) {
   return (
-    <div className="fixed inset-0 z-0 pointer-events-none">
+    <div className="fixed inset-0 z-0 pointer-events-none" aria-hidden="true">
       <video
         className="h-full w-full object-cover object-center"
         src={src}

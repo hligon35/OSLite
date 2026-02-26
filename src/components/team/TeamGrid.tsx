@@ -11,7 +11,13 @@ export function TeamGrid({ founders }: { founders: Founder[] }) {
         >
           <div className="flex items-start gap-5">
             <div className="relative h-16 w-16 overflow-hidden border border-white/10 bg-black/30">
-              <Image src={f.photoUrl} alt={f.name} fill className="object-cover" />
+              <Image
+                src={f.photoUrl}
+                alt={f.name}
+                fill
+                sizes="64px"
+                className="object-cover"
+              />
             </div>
             <div className="min-w-0">
               <div className="text-xl font-semibold tracking-tight text-white">{f.name}</div>
