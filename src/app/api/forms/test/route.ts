@@ -38,7 +38,7 @@ export async function POST(req: Request) {
       contentHtml: renderKeyValueTable([
         { label: 'Name', value: 'Test User' },
         { label: 'Email', value: 'test@example.com' },
-        { label: 'Company', value: 'Off Season' },
+        { label: 'Company', value: 'OffSeason' },
         {
           label: 'Message',
           value:
@@ -61,7 +61,7 @@ export async function POST(req: Request) {
     await sendTransactionalEmail({
       to: recipients.to,
       bcc: recipients.bcc,
-      subject: 'Offseason — [TEST] Contact Form Template',
+      subject: 'OffSeason — [TEST] Contact Form Template',
       html: contactHtml,
       text: 'Test email — Contact Form Template'
     });
@@ -69,7 +69,7 @@ export async function POST(req: Request) {
     await sendTransactionalEmail({
       to: recipients.to,
       bcc: recipients.bcc,
-      subject: 'Offseason — [TEST] Newsletter Template',
+      subject: 'OffSeason — [TEST] Newsletter Template',
       html: newsletterHtml,
       text: 'Test email — Newsletter Template'
     });

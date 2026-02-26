@@ -1,6 +1,6 @@
-# Off Season Site
+# OffSeason Site
 
-Next.js (App Router) + Tailwind scaffolding for the Off Season website.
+Next.js (App Router) + Tailwind scaffolding for the OffSeason website.
 
 ## Setup
 
@@ -27,7 +27,7 @@ Set these environment variables (e.g. in `.env.local`):
 
 - `SENDGRID_API_KEY` — SendGrid API key with Mail Send permissions
 - `SENDGRID_FROM_EMAIL` — Verified sender email in SendGrid
-- `SENDGRID_FROM_NAME` — Optional (defaults to `Offseason`)
+- `SENDGRID_FROM_NAME` — Optional (defaults to `OffSeason`)
 - `SITE_URL` — Base URL used for the email logo link/image (e.g. `https://yourdomain.com`)
 - `FORMS_TO_EMAIL` — Optional comma-separated recipient list; if not set, defaults to `hligon@getsparqd.com`
 - `FORMS_TEST_TOKEN` — Optional bearer token to protect `POST /api/forms/test`

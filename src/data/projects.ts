@@ -4,7 +4,7 @@ export const projects: Project[] = [
   {
     id: 'p1',
     slug: 'offseason-trailer',
-    title: 'Offseason',
+    title: 'OffSeason',
     platform: 'Film',
     format: 'Trailer',
     logline: 'The calm before the collision.',
@@ -47,7 +47,7 @@ export const projects: Project[] = [
         caption: 'Key art'
       }
     ],
-    credits: [{ role: 'Studio', name: 'Offseason' }]
+    credits: [{ role: 'Studio', name: 'OffSeason' }]
   },
   {
     id: 'p3',
@@ -69,7 +69,7 @@ export const projects: Project[] = [
         caption: 'Still'
       }
     ],
-    credits: [{ role: 'Studio', name: 'Offseason' }]
+    credits: [{ role: 'Studio', name: 'OffSeason' }]
   }
 ];
 

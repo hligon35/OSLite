@@ -15,7 +15,7 @@ export default function ProjectsPage() {
           <div className="relative w-full">
             <Image
               src="/offPromo.jpg"
-              alt="Off Season promo"
+              alt="OffSeason promo"
               width={800}
               height={450}
               priority

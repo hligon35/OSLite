@@ -52,7 +52,7 @@ export async function POST(req: Request) {
 
     const html = renderEmailLayout({
       title: 'New Contact Submission',
-      subtitle: 'A message was sent from the Offseason website contact form.',
+      subtitle: 'A message was sent from the OffSeason website contact form.',
       siteUrl,
       logoSrc: 'cid:offseasonlogo',
       contentHtml: detailsTable
@@ -63,7 +63,7 @@ export async function POST(req: Request) {
     await sendTransactionalEmail({
       to: recipients.to,
       bcc: recipients.bcc,
-      subject: 'Offseason — New Contact Submission',
+      subject: 'OffSeason — New Contact Submission',
       html,
       text,
       replyTo: { email, name }
@@ -87,7 +87,7 @@ export async function POST(req: Request) {
 
     await sendTransactionalEmail({
       to: email,
-      subject: 'Offseason — We received your message',
+      subject: 'OffSeason — We received your message',
       html: confirmationHtml,
       text: confirmationText
     });

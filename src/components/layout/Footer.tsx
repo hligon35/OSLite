@@ -3,7 +3,7 @@ export function Footer() {
     <footer className="border-t border-white/10 bg-black">
       <div className="mx-auto flex max-w-6xl flex-col gap-4 px-4 py-8 md:flex-row md:items-center md:justify-between md:px-6">
         <div className="text-xs uppercase tracking-[0.2em] text-white/60">
-          Offseason — Body. Mind. Ownership.
+          OffSeason — Body. Mind. Ownership.
         </div>
         <div className="flex flex-wrap items-center gap-x-5 gap-y-3 text-xs uppercase tracking-[0.2em] text-white/70">
           <a

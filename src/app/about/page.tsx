@@ -7,7 +7,7 @@ export default function AboutPage() {
       <SectionTitle>About</SectionTitle>
       <div className="max-w-4xl space-y-8 text-white/85 animate-fade-up">
         <p className="text-xl md:text-2xl font-semibold tracking-tight text-white/90 leading-relaxed">
-          Off Season is a premium athlete-led media brand that documents how elite performers
+          OffSeason is a premium athlete-led media brand that documents how elite performers
           train, recover, and build between seasons — because in a world of instant gratification,
           the off season is what separates the average from the great.
         </p>

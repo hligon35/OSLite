@@ -38,7 +38,7 @@ export async function POST(req: Request) {
 
     const html = renderEmailLayout({
       title: 'Newsletter Signup',
-      subtitle: 'A new email address subscribed via the Offseason site.',
+      subtitle: 'A new email address subscribed via the OffSeason site.',
       siteUrl,
       logoSrc: 'cid:offseasonlogo',
       contentHtml: detailsTable
@@ -49,7 +49,7 @@ export async function POST(req: Request) {
     await sendTransactionalEmail({
       to: recipients.to,
       bcc: recipients.bcc,
-      subject: 'Offseason — Newsletter Signup',
+      subject: 'OffSeason — Newsletter Signup',
       html,
       text
     });

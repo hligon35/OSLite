@@ -3,7 +3,7 @@ import './globals.css';
 import { AppShell } from '@/components/layout/AppShell';
 
 export const metadata: Metadata = {
-  title: 'Off Season',
+  title: 'OffSeason',
   description: 'A cinematic, modern studio site scaffold.',
   icons: {
     icon: '/OSlogo.png'
