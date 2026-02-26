@@ -47,13 +47,14 @@ export async function POST(req: Request) {
       { label: 'Name', value: name },
       { label: 'Email', value: email },
       { label: 'Company', value: company },
-      { label: 'Message', value: message }
+      { label: 'Message', value: message, fullWidth: true }
     ]);
 
     const html = renderEmailLayout({
       title: 'New Contact Submission',
       subtitle: 'A message was sent from the Offseason website contact form.',
       siteUrl,
+      logoSrc: 'cid:offseasonlogo',
       contentHtml: detailsTable
     });
 
@@ -66,6 +67,29 @@ export async function POST(req: Request) {
       html,
       text,
       replyTo: { email, name }
+    });
+
+    const confirmationTable = renderKeyValueTable([
+      { label: 'Name', value: name },
+      { label: 'Email', value: email },
+      { label: 'Message', value: message, fullWidth: true }
+    ]);
+
+    const confirmationHtml = renderEmailLayout({
+      title: 'We received your message',
+      subtitle: 'Thanks for reaching out. We’ll get back to you as soon as we can.',
+      siteUrl,
+      logoSrc: 'cid:offseasonlogo',
+      contentHtml: confirmationTable
+    });
+
+    const confirmationText = `We received your message\n\nThanks for reaching out. We’ll get back to you as soon as we can.\n\nYour submission:\nName: ${name}\nEmail: ${email}\n\nMessage:\n${message}`;
+
+    await sendTransactionalEmail({
+      to: email,
+      subject: 'Offseason — We received your message',
+      html: confirmationHtml,
+      text: confirmationText
     });
 
     return NextResponse.json({ ok: true });

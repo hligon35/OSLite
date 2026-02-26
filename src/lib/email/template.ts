@@ -3,6 +3,7 @@ type EmailLayoutParams = {
   subtitle?: string;
   contentHtml: string;
   siteUrl: string;
+  logoSrc?: string;
 };
 
 function escapeHtml(input: string) {
@@ -18,11 +19,12 @@ export function renderEmailLayout({
   title,
   subtitle,
   contentHtml,
-  siteUrl
+  siteUrl,
+  logoSrc
 }: EmailLayoutParams) {
   const safeTitle = escapeHtml(title);
   const safeSubtitle = subtitle ? escapeHtml(subtitle) : undefined;
-  const logoUrl = `${siteUrl.replace(/\/$/, '')}/offseasonlogo.png`;
+  const logoUrl = logoSrc ?? `${siteUrl.replace(/\/$/, '')}/offseasonlogo.png`;
 
   return `<!doctype html>
 <html lang="en">
@@ -79,12 +81,29 @@ export function renderEmailLayout({
 </html>`;
 }
 
-export function renderKeyValueTable(rows: Array<{ label: string; value: string }>) {
+export function renderKeyValueTable(
+  rows: Array<{ label: string; value: string; fullWidth?: boolean }>
+) {
   const items = rows
     .filter((r) => r.value.trim().length > 0)
     .map((r) => {
       const label = escapeHtml(r.label);
       const value = escapeHtml(r.value);
+
+      if (r.fullWidth) {
+        return `
+          <tr>
+            <td colspan="2" style="padding:10px 12px;border-top:1px solid rgba(255,255,255,0.10);vertical-align:top;">
+              <div style="font-size:11px;letter-spacing:0.22em;text-transform:uppercase;color:rgba(255,255,255,0.60);">${label}</div>
+            </td>
+          </tr>
+          <tr>
+            <td colspan="2" style="padding:10px 12px;border-top:1px solid rgba(255,255,255,0.10);vertical-align:top;">
+              <div style="font-size:14px;line-height:1.6;color:rgba(255,255,255,0.90);white-space:pre-wrap;">${value}</div>
+            </td>
+          </tr>`;
+      }
+
       return `
         <tr>
           <td style="padding:10px 12px;border-top:1px solid rgba(255,255,255,0.10);vertical-align:top;width:160px;">

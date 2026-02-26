@@ -34,6 +34,7 @@ export async function POST(req: Request) {
       title: '[TEST] New Contact Submission',
       subtitle: 'Template preview — Contact form',
       siteUrl,
+      logoSrc: 'cid:offseasonlogo',
       contentHtml: renderKeyValueTable([
         { label: 'Name', value: 'Test User' },
         { label: 'Email', value: 'test@example.com' },
@@ -41,7 +42,8 @@ export async function POST(req: Request) {
         {
           label: 'Message',
           value:
-            'This is a test submission to preview the email template styling.\n\nIf something looks off, we can adjust spacing, borders, and typography.'
+            'This is a test submission to preview the email template styling.\n\nIf something looks off, we can adjust spacing, borders, and typography.',
+          fullWidth: true
         }
       ])
     });
@@ -50,6 +52,7 @@ export async function POST(req: Request) {
       title: '[TEST] Newsletter Signup',
       subtitle: 'Template preview — Newsletter form',
       siteUrl,
+      logoSrc: 'cid:offseasonlogo',
       contentHtml: renderKeyValueTable([
         { label: 'Email', value: 'subscriber@example.com' }
       ])

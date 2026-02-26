@@ -1,6 +1,45 @@
 import sgMail, { type MailDataRequired } from '@sendgrid/mail';
+import fs from 'node:fs';
+import path from 'node:path';
 
 const DEV_TEST_RECIPIENT = 'hligon@getsparqd.com';
+
+type SendGridAttachment = {
+  content: string;
+  filename: string;
+  type?: string;
+  disposition?: string;
+  // IMPORTANT: SendGrid helper key-conversion ignores arrays, so attachment objects
+  // must already use snake_case keys like `content_id`.
+  content_id?: string;
+};
+
+let inlineLogoAttachmentCache: SendGridAttachment | null | undefined;
+
+function getInlineLogoAttachment(): SendGridAttachment | null {
+  if (inlineLogoAttachmentCache !== undefined) return inlineLogoAttachmentCache;
+
+  try {
+    const filePath = path.join(process.cwd(), 'public', 'offseasonlogo.png');
+    if (!fs.existsSync(filePath)) {
+      inlineLogoAttachmentCache = null;
+      return null;
+    }
+
+    const content = fs.readFileSync(filePath).toString('base64');
+    inlineLogoAttachmentCache = {
+      content,
+      filename: 'offseasonlogo.png',
+      type: 'image/png',
+      disposition: 'inline',
+      content_id: 'offseasonlogo'
+    };
+  } catch {
+    inlineLogoAttachmentCache = null;
+  }
+
+  return inlineLogoAttachmentCache;
+}
 
 function getSiteUrl() {
   return (
@@ -48,13 +87,60 @@ export async function sendTransactionalEmail(
   const config = getEmailConfig();
   sgMail.setApiKey(config.apiKey);
 
+  const inlineLogo = getInlineLogoAttachment();
+  const providedAttachments = (data as Partial<MailDataRequired>).attachments ?? [];
+  const attachments = inlineLogo
+    ? [
+        ...providedAttachments.filter(
+          (a) =>
+            (a as { content_id?: string; contentId?: string } | undefined)?.content_id !==
+              inlineLogo.content_id &&
+            (a as { content_id?: string; contentId?: string } | undefined)?.contentId !==
+              inlineLogo.content_id
+        ),
+        inlineLogo
+      ]
+    : providedAttachments;
+
   const payload: MailDataRequired = {
     ...(data as Omit<MailDataRequired, 'from'>),
     from: config.from,
-    text: data.text ?? ' '
+    text: data.text ?? ' ',
+    attachments: attachments.length > 0 ? attachments : undefined
   };
 
-  await sgMail.send(payload);
+  try {
+    await sgMail.send(payload);
+  } catch (err) {
+    const anyErr = err as {
+      message?: string;
+      response?: {
+        statusCode?: number;
+        body?: {
+          errors?: Array<{ message?: string; field?: string; help?: string }>;
+        };
+      };
+    };
+
+    const errors = anyErr.response?.body?.errors;
+    if (errors && errors.length > 0) {
+      const details = errors
+        .map((e) => {
+          const parts = [e.message, e.field, e.help].filter(Boolean);
+          return parts.join(' | ');
+        })
+        .join('; ');
+
+      throw new Error(details);
+    }
+
+    const status = anyErr.response?.statusCode;
+    throw new Error(
+      [status ? `SendGrid ${status}` : null, anyErr.message || 'Send failed']
+        .filter(Boolean)
+        .join(' — ')
+    );
+  }
 
   return { ok: true } as const;
 }

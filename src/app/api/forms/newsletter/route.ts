@@ -40,6 +40,7 @@ export async function POST(req: Request) {
       title: 'Newsletter Signup',
       subtitle: 'A new email address subscribed via the Offseason site.',
       siteUrl,
+      logoSrc: 'cid:offseasonlogo',
       contentHtml: detailsTable
     });
 
