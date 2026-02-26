@@ -6,7 +6,7 @@ export default function ProjectsPage() {
   return (
     <Section contained={false}>
       <div className="mx-auto w-full max-w-4xl">
-        <div className="animate-fade-up w-full md:w-1/2 md:mx-auto text-left md:-ml-[50px]">
+        <div className="animate-fade-up w-full md:w-1/2 md:mx-auto text-left md:ml-[150px]">
           <SectionTitle className="mb-1 md:mb-2">Projects</SectionTitle>
           <div className="text-xs uppercase tracking-[0.2em] text-white/60">Season One</div>
         </div>
