@@ -1,6 +1,6 @@
-# Offseason Studio Site
+# Off Season Site
 
-Next.js (App Router) + Tailwind scaffolding for the Offseason studio website.
+Next.js (App Router) + Tailwind scaffolding for the Off Season website.
 
 ## Setup
 

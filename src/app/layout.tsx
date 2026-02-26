@@ -3,8 +3,11 @@ import './globals.css';
 import { AppShell } from '@/components/layout/AppShell';
 
 export const metadata: Metadata = {
-  title: 'Offseason Studio',
-  description: 'A cinematic, modern studio site scaffold.'
+  title: 'Off Season',
+  description: 'A cinematic, modern studio site scaffold.',
+  icons: {
+    icon: '/OSlogo.png'
+  }
 };
 
 export default function RootLayout({

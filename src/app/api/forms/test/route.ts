@@ -38,7 +38,7 @@ export async function POST(req: Request) {
       contentHtml: renderKeyValueTable([
         { label: 'Name', value: 'Test User' },
         { label: 'Email', value: 'test@example.com' },
-        { label: 'Company', value: 'Offseason Studio' },
+        { label: 'Company', value: 'Off Season' },
         {
           label: 'Message',
           value:
