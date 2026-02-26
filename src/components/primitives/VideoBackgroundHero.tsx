@@ -12,7 +12,7 @@ export function VideoBackgroundHero({
   align?: 'center' | 'left';
 }) {
   return (
-    <section className="relative h-[100dvh] w-full overflow-hidden">
+    <section className="relative h-[100svh] w-full overflow-hidden">
       <video
         className="absolute inset-0 h-full w-full object-cover object-center -z-10"
         src={videoSrc}

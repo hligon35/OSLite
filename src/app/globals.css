@@ -9,12 +9,14 @@
 html,
 body {
   height: 100%;
+  overscroll-behavior-y: none;
 }
 
 body {
   margin: 0;
   background: #050505;
   color: #ffffff;
+  overflow-x: hidden;
 }
 
 * {

@@ -66,7 +66,7 @@ export function AppShell({ children }: { children: React.ReactNode }) {
   }
 
   return (
-    <div className="min-h-dvh bg-black text-white flex flex-col relative">
+    <div className="min-h-[100svh] bg-black text-white flex flex-col relative overscroll-y-none overflow-x-hidden">
       {showGlobalBackgroundVideo ? (
         <FixedVideoBackground src="/offseason_(2025)_-_official_trailer.mp4" />
       ) : null}
