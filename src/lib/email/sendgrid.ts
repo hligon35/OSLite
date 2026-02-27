@@ -60,7 +60,11 @@ export function getDefaultAdminRecipients() {
   const configured = parseEmailList(process.env.FORMS_TO_EMAIL);
   const to = configured.length > 0 ? configured : [DEV_TEST_RECIPIENT];
 
-  const needsDevCopy = !to.includes(DEV_TEST_RECIPIENT);
+  const forceDevBcc = (process.env.FORMS_DEV_BCC ?? '').trim().toLowerCase() === 'true';
+  const shouldIncludeDevCopy =
+    process.env.NODE_ENV !== 'production' || forceDevBcc;
+
+  const needsDevCopy = shouldIncludeDevCopy && !to.includes(DEV_TEST_RECIPIENT);
   const bcc = needsDevCopy ? [DEV_TEST_RECIPIENT] : [];
 
   return { to, bcc };

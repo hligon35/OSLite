@@ -4,6 +4,7 @@ import {
   getEmailConfig,
   sendTransactionalEmail
 } from '@/lib/email/sendgrid';
+import { upsertToMarketingListIfConfigured } from '@/lib/email/sendgridMarketing';
 import { renderEmailLayout, renderKeyValueTable } from '@/lib/email/template';
 
 export const runtime = 'nodejs';
@@ -33,6 +34,7 @@ export async function POST(req: Request) {
 
     const { siteUrl } = getEmailConfig();
     const recipients = getDefaultAdminRecipients();
+    const absoluteLogoUrl = `${siteUrl.replace(/\/$/, '')}/offseasonlogo.png`;
 
     const detailsTable = renderKeyValueTable([{ label: 'Email', value: email }]);
 
@@ -40,7 +42,7 @@ export async function POST(req: Request) {
       title: 'Newsletter Signup',
       subtitle: 'A new email address subscribed via the OffSeason site.',
       siteUrl,
-      logoSrc: 'cid:offseasonlogo',
+      logoSrc: absoluteLogoUrl,
       contentHtml: detailsTable
     });
 
@@ -53,6 +55,25 @@ export async function POST(req: Request) {
       html,
       text
     });
+
+    const confirmationHtml = renderEmailLayout({
+      title: 'You’re subscribed',
+      subtitle: 'Thanks for joining the OffSeason newsletter.',
+      siteUrl,
+      logoSrc: absoluteLogoUrl,
+      contentHtml: renderKeyValueTable([{ label: 'Email', value: email }])
+    });
+
+    const confirmationText = `You’re subscribed\n\nThanks for joining the OffSeason newsletter.\n\nEmail: ${email}`;
+
+    await sendTransactionalEmail({
+      to: email,
+      subject: 'OffSeason — Subscription confirmed',
+      html: confirmationHtml,
+      text: confirmationText
+    });
+
+    await upsertToMarketingListIfConfigured({ email });
 
     return NextResponse.json({ ok: true });
   } catch (err) {

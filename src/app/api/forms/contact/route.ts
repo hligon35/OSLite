@@ -4,6 +4,7 @@ import {
   getEmailConfig,
   sendTransactionalEmail
 } from '@/lib/email/sendgrid';
+import { upsertToMarketingListIfConfigured } from '@/lib/email/sendgridMarketing';
 import { renderEmailLayout, renderKeyValueTable } from '@/lib/email/template';
 
 export const runtime = 'nodejs';
@@ -42,6 +43,7 @@ export async function POST(req: Request) {
 
     const { siteUrl } = getEmailConfig();
     const recipients = getDefaultAdminRecipients();
+    const absoluteLogoUrl = `${siteUrl.replace(/\/$/, '')}/offseasonlogo.png`;
 
     const detailsTable = renderKeyValueTable([
       { label: 'Name', value: name },
@@ -54,7 +56,7 @@ export async function POST(req: Request) {
       title: 'New Contact Submission',
       subtitle: 'A message was sent from the OffSeason website contact form.',
       siteUrl,
-      logoSrc: 'cid:offseasonlogo',
+      logoSrc: absoluteLogoUrl,
       contentHtml: detailsTable
     });
 
@@ -79,7 +81,7 @@ export async function POST(req: Request) {
       title: 'We received your message',
       subtitle: 'Thanks for reaching out. We’ll get back to you as soon as we can.',
       siteUrl,
-      logoSrc: 'cid:offseasonlogo',
+      logoSrc: absoluteLogoUrl,
       contentHtml: confirmationTable
     });
 
@@ -90,6 +92,12 @@ export async function POST(req: Request) {
       subject: 'OffSeason — We received your message',
       html: confirmationHtml,
       text: confirmationText
+    });
+
+    await upsertToMarketingListIfConfigured({
+      email,
+      firstName: name,
+      company
     });
 
     return NextResponse.json({ ok: true });

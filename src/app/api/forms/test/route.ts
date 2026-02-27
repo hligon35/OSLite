@@ -29,12 +29,13 @@ export async function POST(req: Request) {
   try {
     const { siteUrl } = getEmailConfig();
     const recipients = getDefaultAdminRecipients();
+    const absoluteLogoUrl = `${siteUrl.replace(/\/$/, '')}/offseasonlogo.png`;
 
     const contactHtml = renderEmailLayout({
       title: '[TEST] New Contact Submission',
       subtitle: 'Template preview — Contact form',
       siteUrl,
-      logoSrc: 'cid:offseasonlogo',
+      logoSrc: absoluteLogoUrl,
       contentHtml: renderKeyValueTable([
         { label: 'Name', value: 'Test User' },
         { label: 'Email', value: 'test@example.com' },
@@ -52,7 +53,7 @@ export async function POST(req: Request) {
       title: '[TEST] Newsletter Signup',
       subtitle: 'Template preview — Newsletter form',
       siteUrl,
-      logoSrc: 'cid:offseasonlogo',
+      logoSrc: absoluteLogoUrl,
       contentHtml: renderKeyValueTable([
         { label: 'Email', value: 'subscriber@example.com' }
       ])
