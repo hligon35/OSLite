@@ -17,9 +17,9 @@ export const metadata: Metadata = buildPageMetadata({
 export default function FoundersPage() {
   return (
     <Section contained={false}>
-      <div className="border border-white/10 bg-black/80 backdrop-blur-sm p-6 md:p-10">
+      <div className="mx-auto w-full max-w-4xl">
         <SectionTitle>Founders</SectionTitle>
-        <TeamGrid founders={founders} />
+        <TeamGrid founders={founders.slice(0, 1)} />
       </div>
 
       <div className="mt-10 flex flex-col items-center justify-center">

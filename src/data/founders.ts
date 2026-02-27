@@ -7,12 +7,5 @@ export const founders: Founder[] = [
     title: 'Creative Director',
     bio: 'Focuses on tone, story, and cinematic composition — making minimal feel inevitable.',
     photoUrl: '/offseasonlogo.png'
-  },
-  {
-    id: 'f2',
-    name: 'Founder Two',
-    title: 'Producer',
-    bio: 'Brings structure and velocity — shaping production into a clean, deliberate process.',
-    photoUrl: '/offseasonlogo.png'
   }
 ];

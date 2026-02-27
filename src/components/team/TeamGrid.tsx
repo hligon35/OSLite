@@ -2,12 +2,20 @@ import Image from 'next/image';
 import type { Founder } from '@/lib/types';
 
 export function TeamGrid({ founders }: { founders: Founder[] }) {
+  const isSingle = founders.length === 1;
+
   return (
-    <div className="grid gap-6 md:grid-cols-2 animate-fade-up">
+    <div
+      className={`${
+        isSingle ? 'flex justify-center' : 'grid md:grid-cols-2'
+      } gap-6 animate-fade-up`}
+    >
       {founders.map((f) => (
         <div
           key={f.id}
-          className="border border-white/10 bg-black/30 p-6 transition hover:border-white/25"
+          className={`${
+            isSingle ? 'w-full max-w-xl' : ''
+          } border border-white/10 bg-black/30 p-6 transition hover:border-white/25`}
         >
           <div className="flex items-start gap-5">
             <div className="relative h-16 w-16 overflow-hidden border border-white/10 bg-black/30">
