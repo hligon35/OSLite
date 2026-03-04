@@ -5,6 +5,7 @@ import { DebugConsolePanel } from '@/components/debug/DebugConsolePanel';
 import { DebugGlobalHandlers } from '@/components/debug/DebugGlobalHandlers';
 import type { Viewport } from 'next';
 import { JsonLd } from '@/components/seo/JsonLd';
+import { Analytics } from '@vercel/analytics/react';
 import {
   DEFAULT_DESCRIPTION,
   DEFAULT_KEYWORDS,
@@ -94,6 +95,7 @@ export default function RootLayout({
       <body>
         <DebugGlobalHandlers />
         <DebugConsolePanel />
+        <Analytics />
         <JsonLd data={orgJsonLd} />
         <JsonLd data={websiteJsonLd} />
         <AppShell>{children}</AppShell>
