@@ -42,14 +42,6 @@ export function renderEmailLayout({
 
     <table role="presentation" cellpadding="0" cellspacing="0" border="0" width="100%" style="background:#000;">
       <tr>
-        <td align="center" style="padding:28px 16px 8px;">
-          <a href="${siteUrl}" style="display:inline-block;text-decoration:none;">
-            <img src="${logoUrl}" width="200" alt="OffSeason" style="display:block;width:200px;height:auto;" />
-          </a>
-        </td>
-      </tr>
-
-      <tr>
         <td align="center" style="padding:16px;">
           <table role="presentation" cellpadding="0" cellspacing="0" border="0" width="100%" style="max-width:760px;border:1px solid rgba(255,255,255,0.12);background:rgba(0,0,0,0.88);">
             <tr>
@@ -63,6 +55,14 @@ export function renderEmailLayout({
             <tr>
               <td style="padding:14px 20px 22px;">
                 ${contentHtml}
+              </td>
+            </tr>
+
+            <tr>
+              <td align="center" style="padding:24px 20px 20px;border-top:1px solid rgba(255,255,255,0.10);">
+                <a href="${siteUrl}" style="display:inline-block;text-decoration:none;">
+                  <img src="${logoUrl}" width="120" alt="OffSeason" style="display:block;width:120px;height:auto;" />
+                </a>
               </td>
             </tr>
           </table>

@@ -114,7 +114,18 @@ export async function sendTransactionalEmail(
   };
 
   try {
-    await sgMail.send(payload);
+    const result = await sgMail.send(payload);
+    
+    // Log successful send for debugging
+    if (process.env.DEBUG === 'true') {
+      console.log('[SendGrid] Email sent successfully', {
+        from: config.from,
+        to: Array.isArray(payload.to) ? payload.to : [payload.to],
+        subject: payload.subject
+      });
+    }
+    
+    return { ok: true } as const;
   } catch (err) {
     const anyErr = err as {
       message?: string;
@@ -127,24 +138,29 @@ export async function sendTransactionalEmail(
     };
 
     const errors = anyErr.response?.body?.errors;
-    if (errors && errors.length > 0) {
-      const details = errors
-        .map((e) => {
-          const parts = [e.message, e.field, e.help].filter(Boolean);
-          return parts.join(' | ');
-        })
-        .join('; ');
+    const errorMessage = errors && errors.length > 0
+      ? errors
+          .map((e) => {
+            const parts = [e.message, e.field, e.help].filter(Boolean);
+            return parts.join(' | ');
+          })
+          .join('; ')
+      : [
+          anyErr.response?.statusCode ? `SendGrid ${anyErr.response.statusCode}` : null,
+          anyErr.message || 'Send failed'
+        ]
+          .filter(Boolean)
+          .join(' — ');
 
-      throw new Error(details);
-    }
+    // Always log email errors
+    console.error('[SendGrid Error]', {
+      error: errorMessage,
+      from: config.from,
+      to: Array.isArray(payload.to) ? payload.to : [payload.to],
+      subject: payload.subject,
+      statusCode: anyErr.response?.statusCode
+    });
 
-    const status = anyErr.response?.statusCode;
-    throw new Error(
-      [status ? `SendGrid ${status}` : null, anyErr.message || 'Send failed']
-        .filter(Boolean)
-        .join(' — ')
-    );
+    throw new Error(errorMessage);
   }
-
-  return { ok: true } as const;
 }
