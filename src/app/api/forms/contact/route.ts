@@ -6,6 +6,7 @@ import {
 } from '@/lib/email/sendgrid';
 import { initServerDebugHandlers, withApiDebug } from '@/lib/debug';
 import { upsertToMarketingListIfConfigured } from '@/lib/email/sendgridMarketing';
+import { backupSubmissionToGoogleSheets } from '@/lib/forms/googleSheetsBackup';
 import { renderEmailLayout, renderKeyValueTable } from '@/lib/email/template';
 
 export const runtime = 'nodejs';
@@ -102,10 +103,21 @@ const postHandler = async (req: Request) => {
       firstName: name,
       company
     });
+    const googleSheetsBackup = await backupSubmissionToGoogleSheets({
+      kind: 'contact',
+      email,
+      name,
+      company,
+      message,
+      source: 'website',
+      userAgent: req.headers.get('user-agent') ?? undefined
+    });
 
     return NextResponse.json({
       ok: true,
-      ...(process.env.NODE_ENV === 'production' ? {} : { marketingSync })
+      ...(process.env.NODE_ENV === 'production'
+        ? {}
+        : { marketingSync, googleSheetsBackup })
     });
   } catch (err) {
     const message = err instanceof Error ? err.message : 'Unknown error';
