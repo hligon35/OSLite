@@ -14,27 +14,33 @@ export function TeamGrid({ founders }: { founders: Founder[] }) {
         <div
           key={f.id}
           className={`${
-            isSingle ? 'w-full max-w-xl' : ''
-          } border border-white/10 bg-black/30 p-6 transition hover:border-white/25`}
+            isSingle ? 'w-full max-w-4xl' : ''
+          } flex flex-col md:flex-row border border-white/10 bg-black/30 transition hover:border-white/25`}
         >
-          <div className="flex items-start gap-5">
-            <div className="relative h-16 w-16 overflow-hidden border border-white/10 bg-black/30">
+          <div className="w-full md:w-1/4 flex flex-col items-center justify-center p-6 border-b md:border-b-0 md:border-r border-white/10">
+            <div className="relative h-32 md:h-48 w-32 md:w-48 overflow-hidden rounded-lg">
               <Image
                 src={f.photoUrl}
                 alt={f.name}
                 fill
-                sizes="64px"
+                sizes="(max-width: 768px) 128px, 192px"
                 className="object-cover"
               />
             </div>
-            <div className="min-w-0">
-              <div className="text-xl font-semibold tracking-tight text-white">{f.name}</div>
-              <div className="mt-1 text-xs uppercase tracking-[0.2em] text-white/60">
-                {f.title}
-              </div>
+            <div className="text-lg md:text-xl font-semibold tracking-tight text-white text-center mt-4">
+              {f.name}
+            </div>
+            <div className="text-xs uppercase tracking-[0.2em] text-white/60 text-center mt-1">
+              {f.title}
             </div>
           </div>
-          <p className="mt-5 text-white/80 leading-relaxed">{f.bio}</p>
+          <div className="w-full md:w-3/4 flex items-center p-4 md:p-6">
+            <div className="text-sm md:text-base text-white/80 leading-relaxed space-y-4">
+              {f.bio.split('\n\n').map((paragraph, i) => (
+                <p key={i}>{paragraph}</p>
+              ))}
+            </div>
+          </div>
         </div>
       ))}
     </div>
