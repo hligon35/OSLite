@@ -1,7 +1,5 @@
-import fs from 'node:fs';
-import path from 'node:path';
 import { appendDebugEntry } from '@/lib/debug/buffer';
-import { getServerLogFilePath, isDebugEnabled } from '@/lib/debug/config';
+import { isDebugEnabled } from '@/lib/debug/config';
 import type { DebugEntry, DebugLevel, DebugMeta, DebugSink } from '@/lib/debug/types';
 
 const browserStyles: Record<DebugLevel, string> = {
@@ -52,16 +50,21 @@ function createEntry(level: DebugLevel, message: string, meta?: DebugMeta): Debu
   };
 }
 
-function tryWriteServerFile(entry: DebugEntry) {
+async function tryWriteServerFile(entry: DebugEntry) {
   if (isBrowser()) return;
-  const filePath = getServerLogFilePath();
-  if (!filePath) return;
 
   try {
-    const absolute = path.isAbsolute(filePath)
+    const { getServerLogFilePath } = await import('@/lib/debug/config');
+    const filePath = getServerLogFilePath();
+    if (!filePath) return;
+
+    const fs = await import('node:fs');
+    const path = await import('node:path');
+
+    const absolute = path.default.isAbsolute(filePath)
       ? filePath
-      : path.join(process.cwd(), filePath);
-    const dir = path.dirname(absolute);
+      : path.default.join(process.cwd(), filePath);
+    const dir = path.default.dirname(absolute);
     if (!fs.existsSync(dir)) {
       fs.mkdirSync(dir, { recursive: true });
     }
@@ -105,7 +108,9 @@ function emit(level: DebugLevel, message: string, meta?: DebugMeta) {
   const entry = createEntry(level, message, meta);
   appendDebugEntry(entry);
   writeConsole(entry);
-  tryWriteServerFile(entry);
+  tryWriteServerFile(entry).catch(() => {
+    return;
+  });
   for (const sink of sinks) {
     try {
       sink(entry);
