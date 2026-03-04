@@ -6,6 +6,7 @@ import { Header } from '@/components/layout/Header';
 import { Footer } from '@/components/layout/Footer';
 import { FullScreenMenuOverlay } from '@/components/nav/FullScreenMenuOverlay';
 import { FixedVideoBackground } from '@/components/primitives/FixedVideoBackground';
+import { debug, debugFetch, startDebugTimer } from '@/lib/debug';
 
 export function AppShell({ children }: { children: React.ReactNode }) {
   const [menuOpen, setMenuOpen] = useState(false);
@@ -43,12 +44,15 @@ export function AppShell({ children }: { children: React.ReactNode }) {
 
     setNewsletterStatus('sending');
     setNewsletterToast(null);
+    const end = startDebugTimer('newsletter_submit');
 
     try {
-      const res = await fetch('/api/forms/newsletter', {
+      const res = await debugFetch('/api/forms/newsletter', {
         method: 'POST',
         headers: { 'Content-Type': 'application/json' },
         body: JSON.stringify({ email })
+      }, {
+        feature: 'newsletter_form'
       });
 
       const json = (await res.json()) as { ok?: boolean; error?: string };
@@ -59,9 +63,13 @@ export function AppShell({ children }: { children: React.ReactNode }) {
       setNewsletterEmail('');
       setNewsletterStatus('success');
       setNewsletterToast('Subscribed');
+      end({ ok: true });
+      debug.success('Newsletter submit success');
     } catch {
       setNewsletterStatus('error');
       setNewsletterToast('Error');
+      end({ ok: false });
+      debug.error('Newsletter submit failed');
     }
   }
 

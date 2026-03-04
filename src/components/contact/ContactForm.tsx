@@ -1,6 +1,7 @@
 'use client';
 
 import { useMemo, useState } from 'react';
+import { debug, debugFetch, startDebugTimer } from '@/lib/debug';
 
 type FormState = {
   name: string;
@@ -39,12 +40,15 @@ export function ContactForm() {
 
     setStatus('sending');
     setToast(null);
+    const end = startDebugTimer('contact_form_submit');
 
     try {
-      const res = await fetch('/api/forms/contact', {
+      const res = await debugFetch('/api/forms/contact', {
         method: 'POST',
         headers: { 'Content-Type': 'application/json' },
         body: JSON.stringify(state)
+      }, {
+        feature: 'contact_form'
       });
 
       const json = (await res.json()) as { ok?: boolean; error?: string };
@@ -55,9 +59,13 @@ export function ContactForm() {
       setState(initialState);
       setStatus('success');
       setToast('Sent');
+      end({ ok: true });
+      debug.success('Contact form submit success');
     } catch {
       setStatus('error');
       setToast('Error');
+      end({ ok: false });
+      debug.error('Contact form submit failed');
     }
   }
 

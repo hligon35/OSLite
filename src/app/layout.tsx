@@ -1,6 +1,8 @@
 import type { Metadata } from 'next';
 import './globals.css';
 import { AppShell } from '@/components/layout/AppShell';
+import { DebugConsolePanel } from '@/components/debug/DebugConsolePanel';
+import { DebugGlobalHandlers } from '@/components/debug/DebugGlobalHandlers';
 import type { Viewport } from 'next';
 import { JsonLd } from '@/components/seo/JsonLd';
 import {
@@ -90,6 +92,8 @@ export default function RootLayout({
   return (
     <html lang="en">
       <body>
+        <DebugGlobalHandlers />
+        <DebugConsolePanel />
         <JsonLd data={orgJsonLd} />
         <JsonLd data={websiteJsonLd} />
         <AppShell>{children}</AppShell>

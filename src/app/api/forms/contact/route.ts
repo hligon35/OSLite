@@ -4,16 +4,19 @@ import {
   getEmailConfig,
   sendTransactionalEmail
 } from '@/lib/email/sendgrid';
+import { initServerDebugHandlers, withApiDebug } from '@/lib/debug';
 import { upsertToMarketingListIfConfigured } from '@/lib/email/sendgridMarketing';
 import { renderEmailLayout, renderKeyValueTable } from '@/lib/email/template';
 
 export const runtime = 'nodejs';
 
+initServerDebugHandlers();
+
 function isValidEmail(email: string) {
   return /^[^\s@]+@[^\s@]+\.[^\s@]+$/.test(email);
 }
 
-export async function POST(req: Request) {
+const postHandler = async (req: Request) => {
   try {
     const body = (await req.json()) as Partial<{
       name: string;
@@ -115,4 +118,6 @@ export async function POST(req: Request) {
       { status: 500 }
     );
   }
-}
+};
+
+export const POST = withApiDebug('forms/contact', postHandler);

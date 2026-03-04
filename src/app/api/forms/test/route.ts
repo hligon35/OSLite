@@ -4,9 +4,12 @@ import {
   getEmailConfig,
   sendTransactionalEmail
 } from '@/lib/email/sendgrid';
+import { initServerDebugHandlers, withApiDebug } from '@/lib/debug';
 import { renderEmailLayout, renderKeyValueTable } from '@/lib/email/template';
 
 export const runtime = 'nodejs';
+
+initServerDebugHandlers();
 
 function isAuthorized(req: Request) {
   const token = process.env.FORMS_TEST_TOKEN;
@@ -18,7 +21,7 @@ function isAuthorized(req: Request) {
   return auth === `Bearer ${token}`;
 }
 
-export async function POST(req: Request) {
+const postHandler = async (req: Request) => {
   if (!isAuthorized(req)) {
     return NextResponse.json(
       { ok: false, error: 'Unauthorized' },
@@ -87,4 +90,6 @@ export async function POST(req: Request) {
       { status: 500 }
     );
   }
-}
+};
+
+export const POST = withApiDebug('forms/test', postHandler);
