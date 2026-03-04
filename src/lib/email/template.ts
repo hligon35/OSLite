@@ -60,9 +60,15 @@ export function renderEmailLayout({
 
             <tr>
               <td align="center" style="padding:24px 20px 20px;border-top:1px solid rgba(255,255,255,0.10);">
-                <a href="${siteUrl}" style="display:inline-block;text-decoration:none;">
-                  <img src="${logoUrl}" width="120" alt="OffSeason" style="display:block;width:120px;height:auto;" />
-                </a>
+                <table role="presentation" cellpadding="0" cellspacing="0" border="0" align="center">
+                  <tr>
+                    <td align="center" style="padding:0;">
+                      <a href="${siteUrl}" style="display:block;text-decoration:none;">
+                        <img src="${logoUrl}" width="100" alt="OffSeason" style="display:block;width:100px;height:auto;margin:0;padding:0;border:none;" />
+                      </a>
+                    </td>
+                  </tr>
+                </table>
               </td>
             </tr>
           </table>
