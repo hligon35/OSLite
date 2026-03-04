@@ -1,6 +1,6 @@
 const SHEET_ID = '1qDSnZSG0K6X6aWs9U8cqNJr8';
 const SHEET_NAME = 'OffSeason Mailing List';
-const SHARED_SECRET = 'replace-with-strong-secret';
+const SHARED_SECRET = 'OS0PfK6Sd2VgbpTSR7RjX6Kg0cx7zmcdYBAibFIFY4k';
 
 function doPost(e) {
   try {
