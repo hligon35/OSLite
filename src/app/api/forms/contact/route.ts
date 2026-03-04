@@ -94,13 +94,16 @@ export async function POST(req: Request) {
       text: confirmationText
     });
 
-    await upsertToMarketingListIfConfigured({
+    const marketingSync = await upsertToMarketingListIfConfigured({
       email,
       firstName: name,
       company
     });
 
-    return NextResponse.json({ ok: true });
+    return NextResponse.json({
+      ok: true,
+      ...(process.env.NODE_ENV === 'production' ? {} : { marketingSync })
+    });
   } catch (err) {
     const message = err instanceof Error ? err.message : 'Unknown error';
     return NextResponse.json(

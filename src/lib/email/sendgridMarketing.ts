@@ -30,10 +30,22 @@ export async function upsertToMarketingListIfConfigured(
   contact: MarketingContactInput
 ) {
   const listIds = parseListIds(process.env.SENDGRID_MARKETING_LIST_IDS);
-  if (listIds.length === 0) return { ok: false, skipped: true } as const;
+  if (listIds.length === 0) {
+    return {
+      ok: false,
+      skipped: true,
+      reason: 'Missing SENDGRID_MARKETING_LIST_IDS'
+    } as const;
+  }
 
   const apiKey = process.env.SENDGRID_API_KEY;
-  if (!apiKey) return { ok: false, skipped: true } as const;
+  if (!apiKey) {
+    return {
+      ok: false,
+      skipped: true,
+      reason: 'Missing SENDGRID_API_KEY'
+    } as const;
+  }
 
   try {
     const client = await getSendGridClient();
@@ -57,8 +69,31 @@ export async function upsertToMarketingListIfConfigured(
     });
 
     return { ok: true } as const;
-  } catch {
+  } catch (err) {
+    const anyErr = err as {
+      message?: string;
+      response?: {
+        statusCode?: number;
+        body?: {
+          errors?: Array<{ message?: string; field?: string; help?: string }>;
+        };
+      };
+    };
+
+    const errors = anyErr.response?.body?.errors ?? [];
+    const details = errors
+      .map((e) => [e.message, e.field, e.help].filter(Boolean).join(' | '))
+      .filter(Boolean)
+      .join('; ');
+
+    const status = anyErr.response?.statusCode;
+    const reason = details || anyErr.message || 'SendGrid marketing sync failed';
+
     // Never block form submissions on marketing list sync.
-    return { ok: false } as const;
+    return {
+      ok: false,
+      status,
+      reason
+    } as const;
   }
 }
