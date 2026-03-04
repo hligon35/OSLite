@@ -58,8 +58,11 @@ async function tryWriteServerFile(entry: DebugEntry) {
     const filePath = getServerLogFilePath();
     if (!filePath) return;
 
-    const fs = await import('node:fs');
-    const path = await import('node:path');
+    // Use string concatenation to hide from webpack's static analysis
+    const fsModule = 'node:' + 'fs';
+    const pathModule = 'node:' + 'path';
+    const fs = await import(fsModule);
+    const path = await import(pathModule);
 
     const absolute = path.default.isAbsolute(filePath)
       ? filePath
