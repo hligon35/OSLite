@@ -1,3 +1,4 @@
+import { notFound } from 'next/navigation';
 import { Section } from '@/components/primitives/Section';
 import { SectionTitle } from '@/components/primitives/SectionTitle';
 import { TeamGrid } from '@/components/team/TeamGrid';
@@ -5,6 +6,8 @@ import { founders } from '@/data/founders';
 import Image from 'next/image';
 import type { Metadata } from 'next';
 import { buildPageMetadata } from '@/lib/seo';
+
+const FOUNDERS_PAGE_ENABLED = false;
 
 export const metadata: Metadata = buildPageMetadata({
   title: 'Founders',
@@ -15,6 +18,10 @@ export const metadata: Metadata = buildPageMetadata({
 });
 
 export default function FoundersPage() {
+  if (!FOUNDERS_PAGE_ENABLED) {
+    notFound();
+  }
+
   return (
     <Section contained={false}>
       <div className="mx-auto w-full max-w-4xl">

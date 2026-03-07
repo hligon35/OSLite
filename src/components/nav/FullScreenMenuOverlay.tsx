@@ -6,7 +6,6 @@ import { NavLink } from '@/components/nav/NavLink';
 const links = [
   { href: '/projects', label: 'Projects' },
   { href: '/about', label: 'About' },
-  { href: '/founders', label: 'Founders' },
   { href: '/contact', label: 'Contact' }
 ];
 
@@ -43,12 +42,12 @@ export function FullScreenMenuOverlay({
       <div
         ref={panelRef}
         tabIndex={-1}
-        className="relative grid h-full w-full grid-cols-2 grid-rows-2 outline-none"
+        className="relative grid h-full w-full grid-cols-1 grid-rows-3 outline-none"
       >
         {links.map((l) => (
           <div
             key={l.href}
-            className="flex items-center justify-center border border-white/10"
+            className="flex items-center justify-center border-y border-white/10 first:border-t-0 last:border-b-0"
           >
             <NavLink href={l.href} onClick={onClose}>
               {l.label}
