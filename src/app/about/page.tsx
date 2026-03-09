@@ -22,21 +22,55 @@ export default function AboutPage() {
       <SectionTitle>About</SectionTitle>
       <div className="max-w-4xl space-y-8 text-white/85 animate-fade-up">
         <p className="text-xl md:text-2xl font-semibold tracking-tight text-white/90 leading-relaxed">
-          OffSeason is a premium athlete-led media brand that documents how elite performers
-          train, recover, and build between seasons — because in a world of instant gratification,
-          the off season is what separates the average from the great.
+          "In a world of instant gratification, greatness is built in the off season."
         </p>
 
         <p className="leading-relaxed">
-          The season is the headline. The offseason is the story — training blocks, rehab rooms,
-          family routines, and the meetings where contracts and careers take shape. We document it
-          with a cinematic eye and a deliberate pace: behavior over slogans, context over hype.
+          OFFSEASON is a premium athlete-owned media brand exploring the intersection of elite
+          sports performance, business, and ownership.
         </p>
 
         <p className="leading-relaxed">
-          Each season releases in weekly episodes and resolves as a premium film. The Standard
-          stays the same every year:{' '}
-          <span className="text-white font-semibold">Body. Mind. Ownership.</span>
+          The platform documents what happens between seasons - the period where athletes train,
+          recover, reinvent themselves, and build the next phase of their careers.
+        </p>
+
+        <p className="leading-relaxed">
+          Through premium storytelling and athlete collaboration, OFFSEASON explores three pillars
+          that define elite competitors today:
+        </p>
+
+        <div className="space-y-6">
+          <div>
+            <h2 className="text-lg font-semibold text-white">Body</h2>
+            <p className="leading-relaxed">Training, recovery, and longevity.</p>
+          </div>
+
+          <div>
+            <h2 className="text-lg font-semibold text-white">Mind</h2>
+            <p className="leading-relaxed">Discipline, resilience, and reinvention.</p>
+          </div>
+
+          <div>
+            <h2 className="text-lg font-semibold text-white">Ownership</h2>
+            <p className="leading-relaxed">
+              Contracts, investments, entrepreneurship, and long-term wealth.
+            </p>
+          </div>
+        </div>
+
+        <p className="leading-relaxed">
+          By studying these cycles across professional sports, OFFSEASON reveals how modern
+          athletes are evolving from performers into builders, investors, and leaders beyond the
+          game.
+        </p>
+
+        <p className="leading-relaxed">
+          Because the off season isn't just part of the calendar.
+        </p>
+
+        <p className="leading-relaxed text-white font-medium">
+          It's where the foundation for greatness is built.
         </p>
       </div>
     </Section>
