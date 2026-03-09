@@ -6,10 +6,10 @@ import { buildPageMetadata } from '@/lib/seo';
 export const metadata: Metadata = buildPageMetadata({
   title: 'About',
   description:
-    'Learn about OffSeason — a premium athlete-led media brand documenting training, recovery, and the work between seasons.',
+    'Learn about OFFSEASON — a premium athlete-led media brand documenting training, recovery, and the work between seasons.',
   pathname: '/about',
   keywords: [
-    'about OffSeason',
+    'about OFFSEASON',
     'athlete-led media',
     'sports documentary',
     'training and recovery storytelling'
@@ -22,22 +22,14 @@ export default function AboutPage() {
       <SectionTitle>About</SectionTitle>
       <div className="max-w-4xl space-y-8 text-white/85 animate-fade-up">
         <p className="text-xl md:text-2xl font-semibold tracking-tight text-white/90 leading-relaxed">
-          "In a world of instant gratification, greatness is built in the off season."
+          OFFSEASON is a premium athlete-led media brand that documents how elite performers
+          train, recover, and build between seasons — because in a world of instant gratification,
+          the off season is what separates the average from the great.
         </p>
 
         <p className="leading-relaxed">
-          OFFSEASON is a premium athlete-owned media brand exploring the intersection of elite
-          sports performance, business, and ownership.
-        </p>
-
-        <p className="leading-relaxed">
-          The platform documents what happens between seasons - the period where athletes train,
-          recover, reinvent themselves, and build the next phase of their careers.
-        </p>
-
-        <p className="leading-relaxed">
-          Through premium storytelling and athlete collaboration, OFFSEASON explores three pillars
-          that define elite competitors today:
+          Through premium storytelling and athlete collaboration, OFFSEASON explores three
+          pillars that define elite competitors today:
         </p>
 
         <div className="space-y-6">
@@ -65,12 +57,10 @@ export default function AboutPage() {
           game.
         </p>
 
-        <p className="leading-relaxed">
-          Because the off season isn't just part of the calendar.
-        </p>
+        <p className="leading-relaxed">Because the off season isn’t just part of the calendar.</p>
 
         <p className="leading-relaxed text-white font-medium">
-          It's where the foundation for greatness is built.
+          It’s where the foundation for greatness is built.
         </p>
       </div>
     </Section>
