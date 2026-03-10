@@ -40,15 +40,16 @@ function nowIso() {
   return new Date().toISOString();
 }
 
-function loadNodeBuiltin<T>(moduleName: string): T | null {
+function loadNodeBuiltin<T extends object>(moduleName: string): T | null {
   if (isBrowser()) return null;
 
   const nodeProcess = process as typeof process & {
-    getBuiltinModule?: (name: string) => T;
+    getBuiltinModule?: (name: string) => object | undefined;
   };
 
   if (typeof nodeProcess.getBuiltinModule === 'function') {
-    return nodeProcess.getBuiltinModule(moduleName);
+    const builtinModule = nodeProcess.getBuiltinModule(moduleName);
+    return builtinModule ? (builtinModule as T) : null;
   }
 
   try {
