@@ -34,7 +34,7 @@ export default function ContactPage() {
             </div>
           </div>
           <p className="leading-relaxed">
-            Enter the Off Season Framework
+            Enter the OFFSEASON Framework
             Every project begins with a story, a theme, and a standard.
             Tell us what you’re creating and why it matters.
             Our team will follow up with a guided intake and outline how your work could fit within our annual architecture.
