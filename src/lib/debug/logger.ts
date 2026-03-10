@@ -40,6 +40,32 @@ function nowIso() {
   return new Date().toISOString();
 }
 
+function loadNodeBuiltin<T>(moduleName: string): T | null {
+  if (isBrowser()) return null;
+
+  const nodeProcess = process as typeof process & {
+    getBuiltinModule?: (name: string) => T;
+  };
+
+  if (typeof nodeProcess.getBuiltinModule === 'function') {
+    return nodeProcess.getBuiltinModule(moduleName);
+  }
+
+  try {
+    const runtimeRequire = Function(
+      'return typeof require !== "undefined" ? require : null;'
+    )() as ((name: string) => T) | null;
+
+    if (typeof runtimeRequire === 'function') {
+      return runtimeRequire(moduleName);
+    }
+  } catch {
+    return null;
+  }
+
+  return null;
+}
+
 function createEntry(level: DebugLevel, message: string, meta?: DebugMeta): DebugEntry {
   return {
     id: `${Date.now()}-${Math.random().toString(36).slice(2, 8)}`,
@@ -58,16 +84,14 @@ async function tryWriteServerFile(entry: DebugEntry) {
     const filePath = getServerLogFilePath();
     if (!filePath) return;
 
-    // Use string concatenation to hide from webpack's static analysis
-    const fsModule = 'node:' + 'fs';
-    const pathModule = 'node:' + 'path';
-    const fs = await import(fsModule);
-    const path = await import(pathModule);
+    const fs = loadNodeBuiltin<typeof import('fs')>('fs');
+    const path = loadNodeBuiltin<typeof import('path')>('path');
+    if (!fs || !path) return;
 
-    const absolute = path.default.isAbsolute(filePath)
+    const absolute = path.isAbsolute(filePath)
       ? filePath
-      : path.default.join(process.cwd(), filePath);
-    const dir = path.default.dirname(absolute);
+      : path.join(process.cwd(), filePath);
+    const dir = path.dirname(absolute);
     if (!fs.existsSync(dir)) {
       fs.mkdirSync(dir, { recursive: true });
     }
