@@ -46,7 +46,7 @@ export function renderEmailLayout({
           <table role="presentation" cellpadding="0" cellspacing="0" border="0" width="100%" style="max-width:760px;border:1px solid rgba(255,255,255,0.12);background:rgba(0,0,0,0.88);">
             <tr>
               <td style="padding:22px 20px 8px;">
-                <div style="font-size:11px;letter-spacing:0.22em;text-transform:uppercase;color:rgba(255,255,255,0.65);">OffSeason — Body. Mind. Ownership.</div>
+                <div style="font-size:11px;letter-spacing:0.22em;text-transform:uppercase;color:rgba(255,255,255,0.65);">OFFSEASON — Body. Mind. Ownership.</div>
                 <div style="margin-top:10px;font-size:24px;line-height:1.2;font-weight:700;letter-spacing:-0.02em;">${safeTitle}</div>
                 ${safeSubtitle ? `<div style="margin-top:8px;font-size:13px;line-height:1.6;color:rgba(255,255,255,0.75);">${safeSubtitle}</div>` : ''}
               </td>
@@ -64,7 +64,7 @@ export function renderEmailLayout({
                   <tr>
                     <td align="center" style="padding:0;">
                       <a href="${siteUrl}" style="display:block;text-decoration:none;">
-                        <img src="${logoUrl}" width="100" alt="OffSeason" style="display:block;width:100px;height:auto;margin:0;padding:0;border:none;" />
+                        <img src="${logoUrl}" width="100" alt="OFFSEASON" style="display:block;width:100px;height:auto;margin:0;padding:0;border:none;" />
                       </a>
                     </td>
                   </tr>
@@ -78,7 +78,7 @@ export function renderEmailLayout({
       <tr>
         <td align="center" style="padding:12px 16px 28px;">
           <div style="font-size:11px;letter-spacing:0.22em;text-transform:uppercase;color:rgba(255,255,255,0.5);">
-            © ${new Date().getFullYear()} OffSeason
+            © ${new Date().getFullYear()} OFFSEASON
           </div>
         </td>
       </tr>

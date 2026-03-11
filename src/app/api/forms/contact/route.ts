@@ -58,7 +58,7 @@ const postHandler = async (req: Request) => {
 
     const html = renderEmailLayout({
       title: 'New Contact Submission',
-      subtitle: 'A message was sent from the OffSeason website contact form.',
+      subtitle: 'A message was sent from the OFFSEASON website contact form.',
       siteUrl,
       logoSrc: absoluteLogoUrl,
       contentHtml: detailsTable
@@ -69,7 +69,7 @@ const postHandler = async (req: Request) => {
     await sendTransactionalEmail({
       to: recipients.to,
       bcc: recipients.bcc,
-      subject: 'OffSeason — New Contact Submission',
+      subject: 'OFFSEASON — New Contact Submission',
       html,
       text,
       replyTo: { email, name }
@@ -93,7 +93,7 @@ const postHandler = async (req: Request) => {
 
     await sendTransactionalEmail({
       to: email,
-      subject: 'OffSeason — We received your message',
+      subject: 'OFFSEASON — We received your message',
       html: confirmationHtml,
       text: confirmationText
     });

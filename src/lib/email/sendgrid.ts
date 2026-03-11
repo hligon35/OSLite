@@ -34,7 +34,7 @@ export function getDefaultAdminRecipients() {
 export function getEmailConfig() {
   const apiKey = process.env.SENDGRID_API_KEY;
   const fromEmail = process.env.SENDGRID_FROM_EMAIL;
-  const fromName = process.env.SENDGRID_FROM_NAME || 'OffSeason';
+  const fromName = process.env.SENDGRID_FROM_NAME || 'OFFSEASON';
 
   if (!apiKey) throw new Error('Missing SENDGRID_API_KEY');
   if (!fromEmail) throw new Error('Missing SENDGRID_FROM_EMAIL');

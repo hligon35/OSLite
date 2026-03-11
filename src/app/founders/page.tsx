@@ -12,9 +12,9 @@ const FOUNDERS_PAGE_ENABLED = false;
 export const metadata: Metadata = buildPageMetadata({
   title: 'Founders',
   description:
-    'Meet the founders behind OffSeason — a premium athlete-led media studio focused on cinematic storytelling and craft.',
+    'Meet the founders behind OFFSEASON — a premium athlete-led media studio focused on cinematic storytelling and craft.',
   pathname: '/founders',
-  keywords: ['OffSeason founders', 'sports media studio', 'creative director', 'producer']
+  keywords: ['OFFSEASON founders', 'sports media studio', 'creative director', 'producer']
 });
 
 export default function FoundersPage() {

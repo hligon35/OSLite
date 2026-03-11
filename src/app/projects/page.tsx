@@ -7,10 +7,10 @@ import { buildPageMetadata } from '@/lib/seo';
 export const metadata: Metadata = buildPageMetadata({
   title: 'Projects',
   description:
-    'Explore OffSeason projects — premium films, series, and brand work with a cinematic focus on athletes and culture.',
+    'Explore OFFSEASON projects — premium films, series, and brand work with a cinematic focus on athletes and culture.',
   pathname: '/projects',
   keywords: [
-    'OffSeason projects',
+    'OFFSEASON projects',
     'sports film projects',
     'athlete documentary projects',
     'brand spots'
@@ -30,7 +30,7 @@ export default function ProjectsPage() {
           <div className="relative w-full">
             <Image
               src="/offPromo.jpg"
-              alt="OffSeason promo"
+              alt="OFFSEASON promo"
               width={800}
               height={450}
               priority

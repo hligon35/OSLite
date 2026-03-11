@@ -20,7 +20,7 @@ export async function generateMetadata({
   if (!project) {
     return buildPageMetadata({
       title: 'Project',
-      description: 'Project details from OffSeason.',
+      description: 'Project details from OFFSEASON.',
       pathname: `/projects/${slug}`
     });
   }
@@ -30,7 +30,7 @@ export async function generateMetadata({
     description: project.logline,
     pathname: `/projects/${project.slug}`,
     keywords: [
-      'OffSeason project',
+      'OFFSEASON project',
       project.title,
       project.platform,
       project.format,

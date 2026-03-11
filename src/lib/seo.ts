@@ -1,13 +1,13 @@
 import type { Metadata } from 'next';
 
-export const SITE_NAME = 'OffSeason';
+export const SITE_NAME = 'OFFSEASON';
 
 // Keep descriptions short (< 160 chars) for SERP snippets.
 export const DEFAULT_DESCRIPTION =
   'Premium athlete-led media documenting how elite performers train, recover, and build between seasons.';
 
 export const DEFAULT_KEYWORDS: string[] = [
-  'OffSeason',
+  'OFFSEASON',
   'athlete-led media',
   'sports documentary',
   'sports culture',

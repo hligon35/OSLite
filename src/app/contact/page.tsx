@@ -8,10 +8,10 @@ import Image from 'next/image';
 export const metadata: Metadata = buildPageMetadata({
   title: 'Contact',
   description:
-    'Contact OffSeason to discuss projects, partnerships, and production. Send a message and we’ll respond with next steps.',
+    'Contact OFFSEASON to discuss projects, partnerships, and production. Send a message and we’ll respond with next steps.',
   pathname: '/contact',
   keywords: [
-    'contact OffSeason',
+    'contact OFFSEASON',
     'sports media production contact',
     'partnership inquiries',
     'documentary production'
@@ -43,7 +43,7 @@ export default function ContactPage() {
           <div className="flex flex-1 items-center justify-center">
             <Image
               src="/offseasonlogo.png"
-              alt="OffSeason"
+              alt="OFFSEASON"
               width={400}
               height={120}
               sizes="400px"

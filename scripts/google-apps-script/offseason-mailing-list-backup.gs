@@ -1,5 +1,5 @@
 const SHEET_ID = '1qDSnZSG0K6X6aWs9U8cqNJr8-NiZwvME6CoAOfhAcWo';
-const SHEET_NAME = 'OffSeason Mailing List';
+const SHEET_NAME = 'OFFSEASON Mailing List';
 const SHARED_SECRET = 'OS0PfK6Sd2VgbpTSR7RjX6Kg0cx7zmcdYBAibFIFY4k';
 
 function doPost(e) {

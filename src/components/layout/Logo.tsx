@@ -6,7 +6,7 @@ export function Logo() {
     <Link href="/" aria-label="Go to landing page" className="inline-flex items-center">
       <Image
         src="/offseasonlogo.png"
-        alt="OffSeason"
+        alt="OFFSEASON"
         width={160}
         height={48}
         priority

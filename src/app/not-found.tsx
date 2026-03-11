@@ -8,7 +8,7 @@ export const metadata: Metadata = buildPageMetadata({
   title: 'Not Found',
   description: 'The requested page could not be found.',
   pathname: '/404',
-  keywords: ['OffSeason 404', 'page not found']
+  keywords: ['OFFSEASON 404', 'page not found']
 });
 
 export default function NotFound() {

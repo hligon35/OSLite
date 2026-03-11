@@ -42,7 +42,7 @@ const postHandler = async (req: Request) => {
       contentHtml: renderKeyValueTable([
         { label: 'Name', value: 'Test User' },
         { label: 'Email', value: 'test@example.com' },
-        { label: 'Company', value: 'OffSeason' },
+        { label: 'Company', value: 'OFFSEASON' },
         {
           label: 'Message',
           value:
@@ -65,7 +65,7 @@ const postHandler = async (req: Request) => {
     await sendTransactionalEmail({
       to: recipients.to,
       bcc: recipients.bcc,
-      subject: 'OffSeason — [TEST] Contact Form Template',
+      subject: 'OFFSEASON — [TEST] Contact Form Template',
       html: contactHtml,
       text: 'Test email — Contact Form Template'
     });
@@ -73,7 +73,7 @@ const postHandler = async (req: Request) => {
     await sendTransactionalEmail({
       to: recipients.to,
       bcc: recipients.bcc,
-      subject: 'OffSeason — [TEST] Newsletter Template',
+      subject: 'OFFSEASON — [TEST] Newsletter Template',
       html: newsletterHtml,
       text: 'Test email — Newsletter Template'
     });

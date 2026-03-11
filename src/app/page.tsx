@@ -3,12 +3,12 @@ import type { Metadata } from 'next';
 import { buildPageMetadata } from '@/lib/seo';
 
 export const metadata: Metadata = buildPageMetadata({
-  title: 'OffSeason',
+  title: 'OFFSEASON',
   description:
     'Premium athlete-led media documenting the off season — training, recovery, and ownership between the headlines.',
   pathname: '/',
   keywords: [
-    'OffSeason',
+    'OFFSEASON',
     'sports documentary series',
     'athlete-led media brand',
     'off season training',

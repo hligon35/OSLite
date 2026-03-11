@@ -44,7 +44,7 @@ const postHandler = async (req: Request) => {
 
     const html = renderEmailLayout({
       title: 'Newsletter Signup',
-      subtitle: 'A new email address subscribed via the OffSeason site.',
+      subtitle: 'A new email address subscribed via the OFFSEASON site.',
       siteUrl,
       logoSrc: absoluteLogoUrl,
       contentHtml: detailsTable
@@ -55,24 +55,24 @@ const postHandler = async (req: Request) => {
     await sendTransactionalEmail({
       to: recipients.to,
       bcc: recipients.bcc,
-      subject: 'OffSeason — Newsletter Signup',
+      subject: 'OFFSEASON — Newsletter Signup',
       html,
       text
     });
 
     const confirmationHtml = renderEmailLayout({
       title: 'You’re subscribed',
-      subtitle: 'Thanks for joining the OffSeason newsletter.',
+      subtitle: 'Thanks for joining the OFFSEASON newsletter.',
       siteUrl,
       logoSrc: absoluteLogoUrl,
       contentHtml: renderKeyValueTable([{ label: 'Email', value: email }])
     });
 
-    const confirmationText = `You’re subscribed\n\nThanks for joining the OffSeason newsletter.\n\nEmail: ${email}`;
+    const confirmationText = `You’re subscribed\n\nThanks for joining the OFFSEASON newsletter.\n\nEmail: ${email}`;
 
     await sendTransactionalEmail({
       to: email,
-      subject: 'OffSeason — Subscription confirmed',
+      subject: 'OFFSEASON — Subscription confirmed',
       html: confirmationHtml,
       text: confirmationText
     });
