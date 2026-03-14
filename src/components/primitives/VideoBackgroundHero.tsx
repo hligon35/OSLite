@@ -31,7 +31,7 @@ export function VideoBackgroundHero({
             (align === 'left' ? 'items-start text-left' : 'items-center text-center')
           }
         >
-          <h1 className="text-5xl md:text-7xl font-bold tracking-tight text-white animate-fade-up">
+          <h1 className="text-5xl md:text-7xl font-semibold tracking-tight text-white animate-fade-up">
             {tagline}
           </h1>
           {subcopy ? (

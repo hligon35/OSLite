@@ -17,6 +17,8 @@ body {
   background: #050505;
   color: #ffffff;
   overflow-x: hidden;
+  font-family: futura-100, sans-serif;
+  font-style: normal;
 }
 
 * {

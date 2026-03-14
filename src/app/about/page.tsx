@@ -27,39 +27,39 @@ export default function AboutPage() {
           the off season is what separates the average from the great.
         </p>
 
-        <p className="leading-relaxed">
+        <p className="font-normal leading-relaxed">
           Through premium storytelling and athlete collaboration, OFFSEASON explores three
           pillars that define elite competitors today:
         </p>
 
         <div className="space-y-6">
           <div>
-            <h2 className="text-lg font-semibold text-white">Body</h2>
-            <p className="leading-relaxed">Training, recovery, and longevity.</p>
+            <h2 className="text-lg font-bold text-white">Body</h2>
+            <p className="font-normal leading-relaxed">Training, recovery, and longevity.</p>
           </div>
 
           <div>
-            <h2 className="text-lg font-semibold text-white">Mind</h2>
-            <p className="leading-relaxed">Discipline, resilience, and reinvention.</p>
+            <h2 className="text-lg font-bold text-white">Mind</h2>
+            <p className="font-normal leading-relaxed">Discipline, resilience, and reinvention.</p>
           </div>
 
           <div>
-            <h2 className="text-lg font-semibold text-white">Ownership</h2>
-            <p className="leading-relaxed">
+            <h2 className="text-lg font-bold text-white">Ownership</h2>
+            <p className="font-normal leading-relaxed">
               Contracts, investments, entrepreneurship, and long-term wealth.
             </p>
           </div>
         </div>
 
-        <p className="leading-relaxed">
+        <p className="font-normal leading-relaxed">
           By studying these cycles across professional sports, OFFSEASON reveals how modern
           athletes are evolving from performers into builders, investors, and leaders beyond the
           game.
         </p>
 
-        <p className="leading-relaxed">Because the off season isn’t just part of the calendar.</p>
+        <p className="font-normal leading-relaxed">Because the off season isn’t just part of the calendar.</p>
 
-        <p className="leading-relaxed text-white font-medium">
+        <p className="leading-relaxed text-white font-semibold">
           It’s where the foundation for greatness is built.
         </p>
       </div>
