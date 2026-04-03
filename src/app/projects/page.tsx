@@ -45,6 +45,11 @@ export default function ProjectsPage() {
               platform="Prime Video"
               iconSrc="/prime.png"
             />
+              <PlatformLink
+                href="https://tv.apple.com/us/show/offseason/umc.cmc.6o4h7jl6isku3ek8jdka5qgex"
+                platform="Apple TV"
+                iconSrc="/appletv.png"
+              />
             <PlatformLink
               href="https://tubitv.com/series/300018933/offseason"
               platform="Tubi"
