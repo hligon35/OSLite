@@ -1,4 +1,3 @@
-import { NextResponse } from 'next/server';
 import {
   getDefaultAdminRecipients,
   getEmailConfig,
@@ -8,22 +7,34 @@ import { initServerDebugHandlers, withApiDebug } from '@/lib/debug';
 import { upsertToMarketingListIfConfigured } from '@/lib/email/sendgridMarketing';
 import { backupSubmissionToGoogleSheets } from '@/lib/forms/googleSheetsBackup';
 import { renderEmailLayout, renderKeyValueTable } from '@/lib/email/template';
+import { hasHoneypotValue, jsonNoStore, validateFormRequest } from '@/lib/security/forms';
 
 export const runtime = 'nodejs';
 
 initServerDebugHandlers();
+
+const MAX_NAME_LENGTH = 100;
+const MAX_EMAIL_LENGTH = 254;
+const MAX_COMPANY_LENGTH = 120;
+const MAX_MESSAGE_LENGTH = 4000;
 
 function isValidEmail(email: string) {
   return /^[^\s@]+@[^\s@]+\.[^\s@]+$/.test(email);
 }
 
 const postHandler = async (req: Request) => {
+  const requestValidationError = validateFormRequest(req);
+  if (requestValidationError) {
+    return requestValidationError;
+  }
+
   try {
     const body = (await req.json()) as Partial<{
       name: string;
       email: string;
       company: string;
       message: string;
+      website: string;
     }>;
 
     const name = (body.name ?? '').trim();
@@ -31,15 +42,31 @@ const postHandler = async (req: Request) => {
     const company = (body.company ?? '').trim();
     const message = (body.message ?? '').trim();
 
+    if (hasHoneypotValue(body.website)) {
+      return jsonNoStore({ ok: true });
+    }
+
     if (!name || !email || !message) {
-      return NextResponse.json(
+      return jsonNoStore(
         { ok: false, error: 'Missing required fields.' },
         { status: 400 }
       );
     }
 
+    if (
+      name.length > MAX_NAME_LENGTH ||
+      email.length > MAX_EMAIL_LENGTH ||
+      company.length > MAX_COMPANY_LENGTH ||
+      message.length > MAX_MESSAGE_LENGTH
+    ) {
+      return jsonNoStore(
+        { ok: false, error: 'One or more fields exceed the allowed length.' },
+        { status: 400 }
+      );
+    }
+
     if (!isValidEmail(email)) {
-      return NextResponse.json(
+      return jsonNoStore(
         { ok: false, error: 'Invalid email address.' },
         { status: 400 }
       );
@@ -113,7 +140,7 @@ const postHandler = async (req: Request) => {
       userAgent: req.headers.get('user-agent') ?? undefined
     });
 
-    return NextResponse.json({
+    return jsonNoStore({
       ok: true,
       ...(process.env.NODE_ENV === 'production'
         ? {}
@@ -121,7 +148,7 @@ const postHandler = async (req: Request) => {
     });
   } catch (err) {
     const message = err instanceof Error ? err.message : 'Unknown error';
-    return NextResponse.json(
+    return jsonNoStore(
       {
         ok: false,
         error: 'Failed to send message.',

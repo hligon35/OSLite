@@ -1,12 +1,12 @@
 import type { Metadata } from 'next';
 import './globals.css';
 import { AppShell } from '@/components/layout/AppShell';
-import { DebugConsolePanel } from '@/components/debug/DebugConsolePanel';
-import { DebugGlobalHandlers } from '@/components/debug/DebugGlobalHandlers';
+import { DebugClientGate } from '@/components/debug/DebugClientGate';
 import type { Viewport } from 'next';
 import { JsonLd } from '@/components/seo/JsonLd';
 import { Analytics } from '@vercel/analytics/react';
 import {
+  DEFAULT_OG_IMAGE,
   DEFAULT_DESCRIPTION,
   DEFAULT_KEYWORDS,
   SITE_NAME,
@@ -31,13 +31,13 @@ export const metadata: Metadata = {
     description: DEFAULT_DESCRIPTION,
     url: '/',
     siteName: SITE_NAME,
-    images: [{ url: '/offseasonlogo.png', alt: SITE_NAME }]
+    images: [{ url: DEFAULT_OG_IMAGE, alt: SITE_NAME }]
   },
   twitter: {
     card: 'summary_large_image',
     title: SITE_NAME,
     description: DEFAULT_DESCRIPTION,
-    images: ['/offseasonlogo.png']
+    images: [DEFAULT_OG_IMAGE]
   },
   robots: {
     index: true,
@@ -74,6 +74,7 @@ export default function RootLayout({
     name: SITE_NAME,
     url: absoluteUrl('/'),
     logo: absoluteUrl('/offseasonlogo.png'),
+    description: DEFAULT_DESCRIPTION,
     sameAs: [
       'https://www.instagram.com/offseasonofc/?next=%2F',
       'https://www.tiktok.com/@offseasonlive',
@@ -87,7 +88,8 @@ export default function RootLayout({
     '@context': 'https://schema.org',
     '@type': 'WebSite',
     name: SITE_NAME,
-    url: absoluteUrl('/')
+    url: absoluteUrl('/'),
+    description: DEFAULT_DESCRIPTION
   };
 
   return (
@@ -100,8 +102,7 @@ export default function RootLayout({
         <link rel="stylesheet" href="https://use.typekit.net/elz2zdv.css" />
       </head>
       <body>
-        <DebugGlobalHandlers />
-        <DebugConsolePanel />
+        <DebugClientGate />
         <Analytics />
         <JsonLd data={orgJsonLd} />
         <JsonLd data={websiteJsonLd} />

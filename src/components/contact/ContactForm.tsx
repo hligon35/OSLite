@@ -8,13 +8,15 @@ type FormState = {
   email: string;
   company: string;
   message: string;
+  website: string;
 };
 
 const initialState: FormState = {
   name: '',
   email: '',
   company: '',
-  message: ''
+  message: '',
+  website: ''
 };
 
 export function ContactForm() {
@@ -77,6 +79,7 @@ export function ContactForm() {
           value={state.name}
           onChange={(v) => update('name', v)}
           autoComplete="name"
+          maxLength={100}
           required
         />
         <Field
@@ -85,6 +88,7 @@ export function ContactForm() {
           value={state.email}
           onChange={(v) => update('email', v)}
           autoComplete="email"
+          maxLength={254}
           required
         />
       </div>
@@ -93,6 +97,7 @@ export function ContactForm() {
         value={state.company}
         onChange={(v) => update('company', v)}
         autoComplete="organization"
+        maxLength={120}
       />
       <Field
         label="Message"
@@ -100,7 +105,16 @@ export function ContactForm() {
         value={state.message}
         onChange={(v) => update('message', v)}
         autoComplete="off"
+        maxLength={4000}
         required
+      />
+      <Field
+        label="Website"
+        value={state.website}
+        onChange={(v) => update('website', v)}
+        autoComplete="off"
+        tabIndex={-1}
+        className="hidden"
       />
 
       <div className="flex items-center gap-3">
@@ -138,7 +152,10 @@ function Field({
   type = 'text',
   textarea = false,
   autoComplete,
-  required = false
+  required = false,
+  tabIndex,
+  className,
+  maxLength
 }: {
   label: string;
   value: string;
@@ -147,9 +164,12 @@ function Field({
   textarea?: boolean;
   autoComplete?: string;
   required?: boolean;
+  tabIndex?: number;
+  className?: string;
+  maxLength?: number;
 }) {
   return (
-    <label className="block">
+    <label className={className ?? 'block'}>
       <div className="text-xs uppercase tracking-[0.2em] text-white/60">{label}</div>
       {textarea ? (
         <textarea
@@ -157,6 +177,8 @@ function Field({
           onChange={(e) => onChange(e.target.value)}
           rows={6}
           required={required}
+          tabIndex={tabIndex}
+          maxLength={maxLength}
           className="mt-2 w-full resize-none border border-white/15 bg-black/30 px-3 py-3 text-white/90 outline-none transition focus:border-white/40"
           autoComplete={autoComplete}
         />
@@ -166,6 +188,8 @@ function Field({
           onChange={(e) => onChange(e.target.value)}
           type={type}
           required={required}
+          tabIndex={tabIndex}
+          maxLength={maxLength}
           className="mt-2 w-full border border-white/15 bg-black/30 px-3 py-3 text-white/90 outline-none transition focus:border-white/40"
           autoComplete={autoComplete}
         />

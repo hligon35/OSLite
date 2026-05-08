@@ -2,8 +2,9 @@ import { notFound } from 'next/navigation';
 import type { Metadata } from 'next';
 import { Section } from '@/components/primitives/Section';
 import { ProjectDetail } from '@/components/projects/ProjectDetail';
+import { JsonLd } from '@/components/seo/JsonLd';
 import { getProjectBySlug, projects } from '@/data/projects';
-import { buildPageMetadata } from '@/lib/seo';
+import { absoluteUrl, buildPageMetadata, SITE_NAME } from '@/lib/seo';
 
 export async function generateStaticParams() {
   return projects.map((p) => ({ slug: p.slug }));
@@ -49,8 +50,34 @@ export default async function ProjectDetailPage({
 
   if (!project) notFound();
 
+  const breadcrumbJsonLd = {
+    '@context': 'https://schema.org',
+    '@type': 'BreadcrumbList',
+    itemListElement: [
+      {
+        '@type': 'ListItem',
+        position: 1,
+        name: SITE_NAME,
+        item: absoluteUrl('/')
+      },
+      {
+        '@type': 'ListItem',
+        position: 2,
+        name: 'Projects',
+        item: absoluteUrl('/projects')
+      },
+      {
+        '@type': 'ListItem',
+        position: 3,
+        name: project.title,
+        item: absoluteUrl(`/projects/${project.slug}`)
+      }
+    ]
+  };
+
   return (
     <Section>
+      <JsonLd data={breadcrumbJsonLd} />
       <ProjectDetail project={project} />
     </Section>
   );

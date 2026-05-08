@@ -1,6 +1,7 @@
 import type { Metadata } from 'next';
 
 export const SITE_NAME = 'OFFSEASON';
+export const DEFAULT_OG_IMAGE = '/offPromo.jpg';
 
 // Keep descriptions short (< 160 chars) for SERP snippets.
 export const DEFAULT_DESCRIPTION =
@@ -57,12 +58,14 @@ export function buildPageMetadata(params: {
       description,
       url: params.pathname,
       siteName: SITE_NAME,
-      type: 'website'
+      type: 'website',
+      images: [{ url: DEFAULT_OG_IMAGE, alt: SITE_NAME }]
     },
     twitter: {
       card: 'summary_large_image',
       title: params.title,
-      description
+      description,
+      images: [DEFAULT_OG_IMAGE]
     }
   };
 }

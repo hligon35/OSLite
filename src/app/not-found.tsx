@@ -11,6 +11,11 @@ export const metadata: Metadata = buildPageMetadata({
   keywords: ['OFFSEASON 404', 'page not found']
 });
 
+metadata.robots = {
+  index: false,
+  follow: false
+};
+
 export default function NotFound() {
   return (
     <Section>

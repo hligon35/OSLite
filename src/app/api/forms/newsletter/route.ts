@@ -1,4 +1,3 @@
-import { NextResponse } from 'next/server';
 import {
   getDefaultAdminRecipients,
   getEmailConfig,
@@ -8,29 +7,48 @@ import { initServerDebugHandlers, withApiDebug } from '@/lib/debug';
 import { upsertToMarketingListIfConfigured } from '@/lib/email/sendgridMarketing';
 import { backupSubmissionToGoogleSheets } from '@/lib/forms/googleSheetsBackup';
 import { renderEmailLayout, renderKeyValueTable } from '@/lib/email/template';
+import { hasHoneypotValue, jsonNoStore, validateFormRequest } from '@/lib/security/forms';
 
 export const runtime = 'nodejs';
 
 initServerDebugHandlers();
+
+const MAX_EMAIL_LENGTH = 254;
 
 function isValidEmail(email: string) {
   return /^[^\s@]+@[^\s@]+\.[^\s@]+$/.test(email);
 }
 
 const postHandler = async (req: Request) => {
+  const requestValidationError = validateFormRequest(req);
+  if (requestValidationError) {
+    return requestValidationError;
+  }
+
   try {
-    const body = (await req.json()) as Partial<{ email: string }>;
+    const body = (await req.json()) as Partial<{ email: string; website: string }>;
     const email = (body.email ?? '').trim();
 
+    if (hasHoneypotValue(body.website)) {
+      return jsonNoStore({ ok: true });
+    }
+
     if (!email) {
-      return NextResponse.json(
+      return jsonNoStore(
         { ok: false, error: 'Email is required.' },
         { status: 400 }
       );
     }
 
+    if (email.length > MAX_EMAIL_LENGTH) {
+      return jsonNoStore(
+        { ok: false, error: 'Email exceeds the allowed length.' },
+        { status: 400 }
+      );
+    }
+
     if (!isValidEmail(email)) {
-      return NextResponse.json(
+      return jsonNoStore(
         { ok: false, error: 'Invalid email address.' },
         { status: 400 }
       );
@@ -85,7 +103,7 @@ const postHandler = async (req: Request) => {
       userAgent: req.headers.get('user-agent') ?? undefined
     });
 
-    return NextResponse.json({
+    return jsonNoStore({
       ok: true,
       ...(process.env.NODE_ENV === 'production'
         ? {}
@@ -93,7 +111,7 @@ const postHandler = async (req: Request) => {
     });
   } catch (err) {
     const message = err instanceof Error ? err.message : 'Unknown error';
-    return NextResponse.json(
+    return jsonNoStore(
       {
         ok: false,
         error: 'Failed to subscribe.',

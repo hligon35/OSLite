@@ -1,4 +1,3 @@
-import { NextResponse } from 'next/server';
 import {
   getDefaultAdminRecipients,
   getEmailConfig,
@@ -6,6 +5,7 @@ import {
 } from '@/lib/email/sendgrid';
 import { initServerDebugHandlers, withApiDebug } from '@/lib/debug';
 import { renderEmailLayout, renderKeyValueTable } from '@/lib/email/template';
+import { jsonNoStore, validateFormRequest } from '@/lib/security/forms';
 
 export const runtime = 'nodejs';
 
@@ -22,8 +22,13 @@ function isAuthorized(req: Request) {
 }
 
 const postHandler = async (req: Request) => {
+  const requestValidationError = validateFormRequest(req);
+  if (requestValidationError) {
+    return requestValidationError;
+  }
+
   if (!isAuthorized(req)) {
-    return NextResponse.json(
+    return jsonNoStore(
       { ok: false, error: 'Unauthorized' },
       { status: 401 }
     );
@@ -78,10 +83,10 @@ const postHandler = async (req: Request) => {
       text: 'Test email — Newsletter Template'
     });
 
-    return NextResponse.json({ ok: true });
+    return jsonNoStore({ ok: true });
   } catch (err) {
     const message = err instanceof Error ? err.message : 'Unknown error';
-    return NextResponse.json(
+    return jsonNoStore(
       {
         ok: false,
         error: 'Failed to send test emails.',

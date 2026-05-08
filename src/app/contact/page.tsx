@@ -29,15 +29,21 @@ export default function ContactPage() {
             <div className="text-sm uppercase tracking-[0.2em] text-white/60">Direct</div>
             <div className="mt-2 space-y-1">
               <div>
-                <span className="text-white/60">Email:</span> info@off-season.io
+                <span className="text-white/60">Email:</span>{' '}
+                <a
+                  href="mailto:info@off-season.io"
+                  className="text-white transition hover:text-white/80"
+                >
+                  info@off-season.io
+                </a>
               </div>
             </div>
           </div>
           <p className="leading-relaxed">
-            Enter the OFFSEASON Framework
-            Every project begins with a story, a theme, and a standard.
-            Tell us what you’re creating and why it matters.
-            Our team will follow up with a guided intake and outline how your work could fit within our annual architecture.
+            Enter the OFFSEASON Framework. Every project begins with a story, a
+            theme, and a standard. Tell us what you’re creating and why it matters.
+            Our team will follow up with a guided intake and outline how your work
+            could fit within our annual architecture.
           </p>
 
           <div className="flex flex-1 items-center justify-center">

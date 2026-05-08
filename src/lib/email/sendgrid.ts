@@ -1,14 +1,7 @@
 import sgMail, { type MailDataRequired } from '@sendgrid/mail';
+import { getSiteUrl } from '@/lib/seo';
 
 const DEV_TEST_RECIPIENT = 'hligon@getsparqd.com';
-
-function getSiteUrl() {
-  return (
-    process.env.SITE_URL ||
-    process.env.NEXT_PUBLIC_SITE_URL ||
-    'http://localhost:3000'
-  );
-}
 
 function parseEmailList(value: string | undefined) {
   return (value ?? '')

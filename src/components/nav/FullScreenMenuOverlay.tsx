@@ -13,22 +13,72 @@ const links = [
 
 export function FullScreenMenuOverlay({
   open,
-  onClose
+  onClose,
+  returnFocusRef
 }: {
   open: boolean;
   onClose: () => void;
+  returnFocusRef?: React.RefObject<HTMLButtonElement | null>;
 }) {
   const panelRef = useRef<HTMLDivElement | null>(null);
 
   useEffect(() => {
     if (!open) return;
     panelRef.current?.focus();
+
+    const panel = panelRef.current;
+    if (!panel) return;
+
+    const selectors = [
+      'a[href]',
+      'button:not([disabled])',
+      'input:not([disabled])',
+      'select:not([disabled])',
+      'textarea:not([disabled])',
+      '[tabindex]:not([tabindex="-1"])'
+    ].join(',');
+
+    function onKeyDown(event: KeyboardEvent) {
+      if (event.key !== 'Tab') return;
+
+      const currentPanel = panelRef.current;
+      if (!currentPanel) return;
+
+      const focusable = Array.from(currentPanel.querySelectorAll<HTMLElement>(selectors));
+      if (focusable.length === 0) {
+        event.preventDefault();
+        currentPanel.focus();
+        return;
+      }
+
+      const first = focusable[0];
+      const last = focusable[focusable.length - 1];
+      const activeElement = document.activeElement as HTMLElement | null;
+
+      if (event.shiftKey && activeElement === first) {
+        event.preventDefault();
+        last.focus();
+      } else if (!event.shiftKey && activeElement === last) {
+        event.preventDefault();
+        first.focus();
+      }
+    }
+
+    panel.addEventListener('keydown', onKeyDown);
+    return () => panel.removeEventListener('keydown', onKeyDown);
   }, [open]);
+
+  useEffect(() => {
+    if (!open) {
+      returnFocusRef?.current?.focus();
+    }
+  }, [open, returnFocusRef]);
 
   if (!open) return null;
 
   return (
     <div
+      id="site-menu"
       className="fixed inset-0 z-[60] animate-menu-in bg-black"
       role="dialog"
       aria-modal="true"

@@ -1,18 +1,26 @@
 'use client';
 
-export function HamburgerButton({
-  open,
-  onClick
-}: {
+import { forwardRef } from 'react';
+
+type HamburgerButtonComponentProps = {
   open: boolean;
   onClick: () => void;
-}) {
+  controls?: string;
+};
+
+export const HamburgerButton = forwardRef<HTMLButtonElement, HamburgerButtonComponentProps>(function HamburgerButton({
+  open,
+  onClick,
+  controls
+}, ref) {
   return (
     <button
+      ref={ref}
       type="button"
       onClick={onClick}
       aria-label={open ? 'Close menu' : 'Open menu'}
       aria-expanded={open}
+      aria-controls={controls}
       className="group inline-flex h-11 w-11 items-center justify-center border border-white/20 bg-black/30 transition hover:border-white/40"
     >
       <span className="sr-only">Menu</span>
@@ -38,4 +46,4 @@ export function HamburgerButton({
       </span>
     </button>
   );
-}
+});
